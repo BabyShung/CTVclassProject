@@ -32,17 +32,17 @@
     NSURLResponse *response;
     NSError *err;
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
-    NSString* newStr = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-    NSLog(@"responseData: %@", newStr);
-    NSLog(@"%@",err);
+    //NSString* newStr = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+    //NSLog(@"responseData: %@", newStr);
+    //NSLog(@"%@",err);
     //Parse to JSON
     NSError *error = nil;
     NSDictionary *jsonArray = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
         if (error != nil) {
-        NSLog(@"Error parsing JSON.");
+        //NSLog(@"Error parsing JSON.");
     }
     else {
-        NSLog(@"Array: %@", jsonArray);
+        //NSLog(@"Array: %@", jsonArray);
     }
     return jsonArray;
 }
@@ -80,7 +80,7 @@
                              forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     self.navigationController.navigationBar.translucent = YES;
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:30
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:10
                                                       target:self selector:@selector(viewWillAppear:)
                                                     userInfo:nil repeats:YES];
     //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CTV_app_background.png"]]; //added
@@ -100,8 +100,8 @@
     NSString *message = [NSString stringWithFormat:@"email=%@&coursename=%@",[defaults objectForKey:@"username"],self.className];
     NSDictionary *questionsDictionary = [self sendMessage:message toAddress:REFRESH];
     self.questionArray = [NSMutableArray arrayWithArray:[questionsDictionary objectForKey:@"qdetails"]];
-    NSLog(@"Refresh!");
     [self.tableView reloadData];
+    NSLog(@"Refresh!");
 }
 
 - (void)didReceiveMemoryWarning
@@ -120,6 +120,10 @@
     self.qid = [qid substringFromIndex:1];
     NSLog(@"%@",self.qid);
     [self performSegueWithIdentifier:@"viewQuestion" sender:self.view];
+}
+
+-(void) viewWillDisappear:(BOOL)animated {
+    [self.timer invalidate];
 }
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -195,19 +199,22 @@
     cell.backgroundView = av;
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    button.frame = CGRectMake(100, 0, 100, 40);
+    button.frame = CGRectMake(0, 0, 100, 40);
     [button setTitle:@"Vote" forState:UIControlStateNormal];
     button.backgroundColor = [UIColor blueColor];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(voteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+
+    UILabel *voteCount = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, 30, 30)];
+    voteCount.text = qVotes;
+    
     //button.frame = desiredLeft;
+    [cell.contentView addSubview:voteCount];
     [cell.contentView addSubview:button];
     [cell.contentView bringSubviewToFront:button];
-    
     [cell addSubview:button];
-    
-    
-    UIImageView *accessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+
+    UIImageView *accessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
     [accessoryView setImage:[UIImage imageNamed:@"round_icon_flat_grey.png"]];
     [cell setAccessoryView:button];
     
