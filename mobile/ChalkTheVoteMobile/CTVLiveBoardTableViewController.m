@@ -47,6 +47,7 @@
     return jsonArray;
 }
 
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -149,6 +150,19 @@
     return 150;
 }
 
+- (IBAction)voteButtonPressed:(id)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *username = [defaults objectForKey:@"username"];
+    NSLog(@"Voting for:%@",self.qid);
+    NSString *message = [NSString stringWithFormat:@"email=%@&qid=%@",username,self.qid];
+    NSDictionary *voteDictionary = [self sendMessage:message toAddress:VOTE];
+    if ([[voteDictionary objectForKey:@"success"] integerValue]==1) {
+        [self viewWillAppear:YES];
+    } else {
+        //show error
+    }
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *simpleTableIdentifier = @"SimpleTableItem";
@@ -160,6 +174,9 @@
     }
     NSString *string = [self.questionArray objectAtIndex:indexPath.row];
     NSArray *array = [string componentsSeparatedByString:@";"];
+    NSString *qid = [array objectAtIndex:0];
+    qid = [qid substringFromIndex:1];
+    self.qid = qid;
     NSString *qtext = [array objectAtIndex:1];
     NSString *qVotes = [array objectAtIndex:2];
     cell.textLabel.text = [NSString stringWithFormat:@"%@\t%@",qtext,qVotes];
@@ -176,6 +193,23 @@
     av.opaque = NO;
     av.image = [UIImage imageNamed:@"cell_back3.png"];
     cell.backgroundView = av;
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    button.frame = CGRectMake(100, 0, 100, 40);
+    [button setTitle:@"Vote" forState:UIControlStateNormal];
+    button.backgroundColor = [UIColor blueColor];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(voteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    //button.frame = desiredLeft;
+    [cell.contentView addSubview:button];
+    [cell.contentView bringSubviewToFront:button];
+    
+    [cell addSubview:button];
+    
+    
+    UIImageView *accessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    [accessoryView setImage:[UIImage imageNamed:@"round_icon_flat_grey.png"]];
+    [cell setAccessoryView:button];
     
     //[self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
     
