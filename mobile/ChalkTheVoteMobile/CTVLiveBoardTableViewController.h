@@ -12,4 +12,7 @@
 @property (nonatomic,strong) NSArray *questionArray;
 @property (nonatomic,strong) NSString *className;
 @property (nonatomic,strong) NSString *question;
+@property (nonatomic,strong) NSString *qID;
+@property (nonatomic,strong) NSString *qVotes;
+@property BOOL popUpShowed;
 @end

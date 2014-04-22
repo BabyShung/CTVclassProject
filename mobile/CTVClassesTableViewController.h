@@ -10,4 +10,5 @@
 
 @interface CTVClassesTableViewController : UITableViewController
 @property (strong, nonatomic, retain) NSMutableArray *classesArray;
+@property BOOL popUpShowed;
 @end

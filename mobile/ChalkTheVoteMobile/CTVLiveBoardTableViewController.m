@@ -15,7 +15,6 @@
 #define POSTQ @"http://chalkthevote.com/Trial/iosPushLiveQuestion.php"
 
 @interface CTVLiveBoardTableViewController ()
-@property (nonatomic,strong) NSString *qid;
 @property NSTimer *timer;
 @end
 
@@ -67,7 +66,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"Arrived at Post Question");
     /* NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *username = [defaults objectForKey:@"username"];
     NSString *message = [NSString stringWithFormat:@"coursename=%@&email=%@",self.className,username];
@@ -99,12 +97,23 @@
     self.timer = [NSTimer scheduledTimerWithTimeInterval:10
                                                   target:self selector:@selector(reloadTable)
                                                 userInfo:nil repeats:YES];
+    NSUInteger arrayCount = [self.questionArray count];
+    if (arrayCount==0 && !self.popUpShowed){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"The QBoard"
+                                                        message:@"This is the QBoard. Nobody has posted a question yet. To get the discussion started click the plus button in the top right corner.."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"Let's go!"
+                                              otherButtonTitles:nil];
+        [alert show];
+        self.popUpShowed = YES;
+    }
     [self reloadTable];
 }
 
 - (void) reloadTable {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *message = [NSString stringWithFormat:@"email=%@&coursename=%@",[defaults objectForKey:@"username"],self.className];
+    
     NSDictionary *questionsDictionary = [self sendMessage:message toAddress:REFRESH];
     self.questionArray = [NSMutableArray arrayWithArray:[questionsDictionary objectForKey:@"qdetails"]];
     [self.tableView reloadData];
@@ -120,12 +129,15 @@
 #pragma mark - Table view data source
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    self.question = [self.questionArray objectAtIndex:indexPath.row];
-    NSArray *array = [self.question componentsSeparatedByString:@";"];
+    NSString *string = [self.questionArray objectAtIndex:indexPath.row];
+    NSArray *array = [string componentsSeparatedByString:@";"];
     NSString *qid = [array objectAtIndex:0];
-    NSLog(@"%@",qid);
-    self.qid = [qid substringFromIndex:1];
-    NSLog(@"%@",self.qid);
+    qid = [qid substringFromIndex:1];
+    NSString *qtext = [array objectAtIndex:1];
+    NSString *qVotes = [array objectAtIndex:2];
+    self.question = qtext;
+    self.qVotes = qVotes;
+    self.qID = qid;
     [self performSegueWithIdentifier:@"viewQuestion" sender:self.view];
 }
 
@@ -137,7 +149,8 @@
     if ([[segue identifier] isEqualToString:@"viewQuestion"]) {
         CTVViewQuestionViewController *vc = [segue destinationViewController];
         vc.question = self.question;
-        vc.qid = self.qid;
+        vc.qID = self.qID;
+        vc.qVotes = self.qVotes;
     } else if ([[segue identifier] isEqualToString:@"postQuestion"]) {
         CTVPostQuestionViewController *vc = [segue destinationViewController];
         vc.className = self.className;
@@ -161,11 +174,12 @@
     return 150;
 }
 
-- (IBAction)voteButtonPressed:(id)sender {
+- (IBAction)voteButtonPressed:(UIButton*)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *username = [defaults objectForKey:@"username"];
-    NSLog(@"Voting for:%@",self.qid);
-    NSString *message = [NSString stringWithFormat:@"email=%@&qid=%@",username,self.qid];
+    NSInteger qID = sender.tag;
+    NSLog(@"Voting for:%ld", (long)qID);
+    NSString *message = [NSString stringWithFormat:@"email=%@&qid=%ld",username,(long)qID];
     NSDictionary *voteDictionary = [self sendMessage:message toAddress:VOTE];
     if ([[voteDictionary objectForKey:@"success"] integerValue]==1) {
         NSLog(@"Voted successful");
@@ -174,6 +188,8 @@
         //show error
     }
 }
+
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -188,7 +204,6 @@
     NSArray *array = [string componentsSeparatedByString:@";"];
     NSString *qid = [array objectAtIndex:0];
     qid = [qid substringFromIndex:1];
-    self.qid = qid;
     NSString *qtext = [array objectAtIndex:1];
     NSString *qVotes = [array objectAtIndex:2];
     NSInteger voted = [[[array objectAtIndex:3] substringToIndex:2] integerValue];
@@ -217,6 +232,8 @@
     button.backgroundColor = [UIColor blueColor];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(voteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [button setTag:[qid integerValue]];
+        
     } else if (voted==1) {
         button.frame = CGRectMake(0, 0, 100, 40);
         [button setTitle:@"Voted" forState:UIControlStateNormal];

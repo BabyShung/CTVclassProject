@@ -46,8 +46,7 @@
 - (IBAction)voteButtonPressed:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *username = [defaults objectForKey:@"username"];
-    NSLog(@"%@",self.qid);
-    NSString *message = [NSString stringWithFormat:@"email=%@&qid=%@",username,self.qid];
+    NSString *message = [NSString stringWithFormat:@"email=%@&qid=%@",username,self.qID];
     NSDictionary *voteDictionary = [self sendMessage:message toAddress:VOTE];
     if ([[voteDictionary objectForKey:@"success"] integerValue]==1) {
         [self.navigationController popViewControllerAnimated:YES];

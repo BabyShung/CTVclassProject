@@ -90,6 +90,18 @@
     NSString *message = [NSString stringWithFormat:@"email=%@",[defaults objectForKey:@"username"]];
     NSDictionary *coursesDictionary = [self sendMessage:message toAddress:COURSELIST];
     self.classesArray = [NSMutableArray arrayWithArray:[coursesDictionary objectForKey:@"courselist"]];
+    NSUInteger arrayCount = [self.classesArray count];
+    if (arrayCount==0 && !self.popUpShowed){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Welcome!"
+                                                        message:@"This is your classes page. Since you don't have any classes yet it is empty. To add a class, click the plus button in the top right corner."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"Got it"
+                                              otherButtonTitles:nil];
+        [alert show];
+        self.popUpShowed = YES;
+        
+    }
+    
     
     [self.tableView reloadData];
 }
