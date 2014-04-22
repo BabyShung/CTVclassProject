@@ -60,7 +60,6 @@
 {
     [super viewDidLoad];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    self.classesArray = [NSMutableArray arrayWithArray:[defaults objectForKey:@"classlist"]];
     
     //prettify
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
@@ -91,6 +90,7 @@
     NSString *message = [NSString stringWithFormat:@"email=%@",[defaults objectForKey:@"username"]];
     NSDictionary *coursesDictionary = [self sendMessage:message toAddress:COURSELIST];
     self.classesArray = [NSMutableArray arrayWithArray:[coursesDictionary objectForKey:@"courselist"]];
+    
     [self.tableView reloadData];
 }
 

@@ -248,6 +248,7 @@
         <!--View Question View Controller-->
         <scene sceneID="d6z-X0-Wfa">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lzA-1w-Nck" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="p5q-ek-UQF" customClass="CTVViewQuestionViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4TK-Zm-MJ1"/>
@@ -281,7 +282,6 @@
                         <outlet property="questionField" destination="4Zc-p1-1a3" id="chR-Uw-gMI"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="lzA-1w-Nck" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4169" y="1060"/>
         </scene>

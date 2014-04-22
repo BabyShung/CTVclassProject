@@ -80,9 +80,9 @@
                              forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     self.navigationController.navigationBar.translucent = YES;
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:10
+    /*self.timer = [NSTimer scheduledTimerWithTimeInterval:10
                                                       target:self selector:@selector(viewWillAppear:)
-                                                    userInfo:nil repeats:YES];
+                                                    userInfo:nil repeats:YES]; */
     //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CTV_app_background.png"]]; //added
     //Sample courses
     // Uncomment the following line to preserve selection between presentations.
@@ -96,12 +96,19 @@
 
 -(void) viewWillAppear:(BOOL)animated {
     self.navigationItem.title = self.className;
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:10
+                                                  target:self selector:@selector(reloadTable)
+                                                userInfo:nil repeats:YES];
+    [self reloadTable];
+}
+
+- (void) reloadTable {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *message = [NSString stringWithFormat:@"email=%@&coursename=%@",[defaults objectForKey:@"username"],self.className];
     NSDictionary *questionsDictionary = [self sendMessage:message toAddress:REFRESH];
     self.questionArray = [NSMutableArray arrayWithArray:[questionsDictionary objectForKey:@"qdetails"]];
     [self.tableView reloadData];
-    NSLog(@"Refresh!");
+    NSLog(@"Refreshed Table");
 }
 
 - (void)didReceiveMemoryWarning
@@ -161,6 +168,7 @@
     NSString *message = [NSString stringWithFormat:@"email=%@&qid=%@",username,self.qid];
     NSDictionary *voteDictionary = [self sendMessage:message toAddress:VOTE];
     if ([[voteDictionary objectForKey:@"success"] integerValue]==1) {
+        NSLog(@"Voted successful");
         [self viewWillAppear:YES];
     } else {
         //show error
@@ -183,6 +191,8 @@
     self.qid = qid;
     NSString *qtext = [array objectAtIndex:1];
     NSString *qVotes = [array objectAtIndex:2];
+    NSInteger voted = [[[array objectAtIndex:3] substringToIndex:2] integerValue];
+
     cell.textLabel.text = [NSString stringWithFormat:@"%@\t%@",qtext,qVotes];
     
     cell.textLabel.textColor = [UIColor whiteColor]; //added
@@ -198,18 +208,23 @@
     av.image = [UIImage imageNamed:@"cell_back3.png"];
     cell.backgroundView = av;
     
+    
     UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    
+    if (voted==0) {
     button.frame = CGRectMake(0, 0, 100, 40);
     [button setTitle:@"Vote" forState:UIControlStateNormal];
     button.backgroundColor = [UIColor blueColor];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(voteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-
-    UILabel *voteCount = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, 30, 30)];
-    voteCount.text = qVotes;
+    } else if (voted==1) {
+        button.frame = CGRectMake(0, 0, 100, 40);
+        [button setTitle:@"Voted" forState:UIControlStateNormal];
+        button.backgroundColor = [UIColor greenColor];
+        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    }
     
     //button.frame = desiredLeft;
-    [cell.contentView addSubview:voteCount];
     [cell.contentView addSubview:button];
     [cell.contentView bringSubviewToFront:button];
     [cell addSubview:button];
