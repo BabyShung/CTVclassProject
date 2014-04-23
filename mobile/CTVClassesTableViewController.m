@@ -147,6 +147,7 @@
     self.tableView.backgroundView = [[UIImageView alloc] initWithImage:
                                      [UIImage imageNamed:@"CTV_class_selection.png"]];
     cell.backgroundColor  = [UIColor clearColor]; //added
+    cell.selectedBackgroundView =  [[UIImageView alloc] initWithImage:[ [UIImage imageNamed:@"cell_back3_selected.png"] stretchableImageWithLeftCapWidth:0.0 topCapHeight:5.0] ];
     return cell;
 }
 

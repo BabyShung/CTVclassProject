@@ -59,9 +59,9 @@
 - (IBAction)voteButtonPressed:(UIButton*)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *username = [defaults objectForKey:@"username"];
-    NSInteger aID = sender.tag;
+    NSString *aID = [NSString stringWithFormat:@"%ld",sender.tag];
     NSLog(@"Voting for:%ld", (long)aID);
-    NSString *message = [NSString stringWithFormat:@"email=%@&qid=%ld",username,(long)aID];
+    NSString *message = [NSString stringWithFormat:@"email=%@&aid=%@",username,aID];
     NSDictionary *voteDictionary = [self sendMessage:message toAddress:VOTE];
     if ([[voteDictionary objectForKey:@"success"] integerValue]==1) {
         NSLog(@"Voted successful");
@@ -199,6 +199,7 @@
     //self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CTV_app_background.png"]]; //added
     //self.tableView.backgroundColor = [UIColor clearColor];
     cell.backgroundColor  = [UIColor clearColor]; //added
+    cell.selectedBackgroundView =  [[UIImageView alloc] initWithImage:[ [UIImage imageNamed:@"cell_back3_selected.png"] stretchableImageWithLeftCapWidth:0.0 topCapHeight:5.0] ];
     return cell;
 }
 

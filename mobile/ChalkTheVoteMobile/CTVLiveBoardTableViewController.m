@@ -225,20 +225,19 @@
     UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     
     if (voted==0) {
-    button.frame = CGRectMake(0, 0, 100, 40);
-    [button setTitle:@"Vote" forState:UIControlStateNormal];
-    button.backgroundColor = [UIColor blueColor];
-    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    button.frame = CGRectMake(0, 0, 40, 40);
     [button addTarget:self action:@selector(voteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    UIImage *buttonImage = [UIImage imageNamed:@"ico1_off_clear.png"];
+    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
     [button setTag:[qid integerValue]];
         
     } else if (voted==1) {
-        button.frame = CGRectMake(0, 0, 100, 40);
-        [button setTitle:@"Voted" forState:UIControlStateNormal];
-        button.backgroundColor = [UIColor greenColor];
-        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        button.frame = CGRectMake(0, 0, 40, 40);
+        UIImage *buttonImage2 = [UIImage imageNamed:@"ico1_off.png"];
+        [button setBackgroundImage:buttonImage2 forState:UIControlStateNormal];
     }
     
+
     //button.frame = desiredLeft;
     [cell.contentView addSubview:button];
     [cell.contentView bringSubviewToFront:button];
@@ -247,13 +246,8 @@
     UIImageView *accessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
     [accessoryView setImage:[UIImage imageNamed:@"round_icon_flat_grey.png"]];
     [cell setAccessoryView:button];
-    
-    //[self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
-    
-    //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CTV_app_background.png"]]; //added
-    //self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CTV_app_background.png"]]; //added
-    //self.tableView.backgroundColor = [UIColor clearColor];
     cell.backgroundColor  = [UIColor clearColor]; //added
+    cell.selectedBackgroundView =  [[UIImageView alloc] initWithImage:[ [UIImage imageNamed:@"cell_back3_selected.png"] stretchableImageWithLeftCapWidth:0.0 topCapHeight:5.0] ];
     return cell;
 }
 
