@@ -48,12 +48,12 @@
 - (void) reloadTable {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *message = [NSString stringWithFormat:@"email=%@&qid=%@",[defaults objectForKey:@"username"],self.qID];
-    NSDictionary *questionsDictionary = [self sendMessage:message toAddress:REFRESH];
-    self.answerArray = [NSMutableArray arrayWithArray:[questionsDictionary objectForKey:@"answersdetails"]];
+    NSDictionary *answerDictionary = [self sendMessage:message toAddress:REFRESH];
+    self.answerArray = [answerDictionary objectForKey:@"answerdetails"];
+    NSLog(@"Answers Array: %@",self.answerArray);
     [self.answerTable reloadData];
     NSLog(@"Refreshed Table");
 }
-
 
 
 - (IBAction)voteButtonPressed:(UIButton*)sender {
@@ -70,6 +70,7 @@
         //show error
     }
 }
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -90,7 +91,6 @@
     self.view.backgroundColor = [UIColor colorWithPatternImage:image];
     self.answerTable.delegate = self;
     self.answerTable.dataSource = self;
-    // Do any additional setup after loading the view.
 }
 
 -(void) viewWillAppear:(BOOL)animated {
@@ -115,9 +115,6 @@
         vc.qid = self.qID;
     }
 }
-
-
-
 
 
 #pragma mark - Table view data source
@@ -147,16 +144,15 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
     }
+    
     NSString *string = [self.answerArray objectAtIndex:indexPath.row];
     NSArray *array = [string componentsSeparatedByString:@";"];
-    NSString *aid = [array objectAtIndex:0];
-    aid = [aid substringFromIndex:1];
+    NSString *aid = [[array objectAtIndex:0] substringFromIndex:1];
     NSString *atext = [array objectAtIndex:1];
     NSString *aVotes = [array objectAtIndex:2];
     NSInteger voted = [[[array objectAtIndex:3] substringToIndex:2] integerValue];
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@\t%@",atext,aVotes];
-    
     cell.textLabel.textColor = [UIColor whiteColor]; //added
     cell.textLabel.numberOfLines = 0;
     cell.textLabel.font = [UIFont fontWithName:@"Hoefler Text" size:16.0f];
