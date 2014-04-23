@@ -248,7 +248,6 @@
         <!--View Question View Controller-->
         <scene sceneID="d6z-X0-Wfa">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="lzA-1w-Nck" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="p5q-ek-UQF" customClass="CTVViewQuestionViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4TK-Zm-MJ1"/>
@@ -283,13 +282,70 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Lkt-cx-VeT"/>
+                    <navigationItem key="navigationItem" id="Lkt-cx-VeT">
+                        <barButtonItem key="rightBarButtonItem" title="+" id="wEQ-tQ-hq7">
+                            <connections>
+                                <segue destination="LCb-0W-X9z" kind="push" identifier="postAnswer" id="fPW-bC-uaS"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="answerTable" destination="sdp-1b-wrs" id="UWQ-7v-QEy"/>
                         <outlet property="questionField" destination="4Zc-p1-1a3" id="chR-Uw-gMI"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lzA-1w-Nck" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4169" y="1060"/>
+        </scene>
+        <!--Post Answer View Controller-->
+        <scene sceneID="ZgL-5s-IhE">
+            <objects>
+                <viewController id="LCb-0W-X9z" customClass="CTVPostAnswerViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="xh7-eL-gm7"/>
+                        <viewControllerLayoutGuide type="bottom" id="iiR-hY-eP9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ICK-zo-xSG">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b9n-fk-mGL">
+                                <rect key="frame" x="137" y="237" width="49" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Submit">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="submitButtonPressed:" destination="LCb-0W-X9z" eventType="touchUpInside" id="kXd-6y-pg4"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vwe-fu-i2e">
+                                <rect key="frame" x="41" y="95" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gQj-qJ-aLN">
+                                <rect key="frame" x="41" y="66" width="240" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="qkI-cS-sYO"/>
+                    <connections>
+                        <outlet property="errorField" destination="gQj-qJ-aLN" id="2b1-Le-yWa"/>
+                        <outlet property="textBox" destination="Vwe-fu-i2e" id="iWC-yy-WLM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="faN-jc-XlD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4644" y="1050"/>
         </scene>
         <!--Post Question View Controller-->
         <scene sceneID="hEZ-yA-ao5">
@@ -304,7 +360,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iwc-5D-FAW">
-                                <rect key="frame" x="20" y="94" width="280" height="287"/>
+                                <rect key="frame" x="20" y="94" width="280" height="155"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" red="0.80782415395585039" green="0.85323037918594213" blue="1" alpha="1" colorSpace="calibratedRGB"/>

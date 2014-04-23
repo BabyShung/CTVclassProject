@@ -59,7 +59,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     //prettify
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new]

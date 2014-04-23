@@ -51,8 +51,6 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        
-
         // Custom initialization
     }
     
@@ -97,6 +95,7 @@
     self.timer = [NSTimer scheduledTimerWithTimeInterval:10
                                                   target:self selector:@selector(reloadTable)
                                                 userInfo:nil repeats:YES];
+    [self reloadTable];
     NSUInteger arrayCount = [self.questionArray count];
     if (arrayCount==0 && !self.popUpShowed){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"The QBoard"
@@ -107,7 +106,6 @@
         [alert show];
         self.popUpShowed = YES;
     }
-    [self reloadTable];
 }
 
 - (void) reloadTable {

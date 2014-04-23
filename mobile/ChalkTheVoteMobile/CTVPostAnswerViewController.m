@@ -1,21 +1,21 @@
 //
-//  CTVPostQuestionViewController.m
+//  CTVPostAnswerViewController.m
 //  ChalkTheVoteMobile
 //
-//  Created by Brandon Craig on 4/7/14.
+//  Created by Brandon Craig on 4/23/14.
 //  Copyright (c) 2014 Brandon Craig. All rights reserved.
 //
 
-#import "CTVPostQuestionViewController.h"
-#define POSTQ @"http://chalkthevote.com/Trial/iosPushLiveQuestion.php"
+#import "CTVPostAnswerViewController.h"
+#define POST @"http://chalkthevote.com/Trial/iosPushAnswer.php"
 
-@interface CTVPostQuestionViewController ()
+@interface CTVPostAnswerViewController ()
 @property (weak, nonatomic) IBOutlet UITextView *textBox;
 @property (weak, nonatomic) IBOutlet UILabel *errorField;
 
 @end
 
-@implementation CTVPostQuestionViewController
+@implementation CTVPostAnswerViewController
 
 - (NSDictionary*) sendMessage:(NSString*)message toAddress:(NSString*)address {
     //TODO verify URL and add back in password
@@ -44,15 +44,11 @@
 }
 
 
--(void) viewWillAppear:(BOOL)animated {
-    self.navigationItem.title = @"Post a Question";
-}
-
 - (IBAction)submitButtonPressed:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *username = [defaults valueForKey:@"username"];
-    NSString *message = [NSString stringWithFormat:@"email=%@&coursename=%@&qtext=%@",username,self.className,self.textBox.text];
-    NSDictionary *postDicionary = [self sendMessage:message toAddress:POSTQ];
+    NSString *message = [NSString stringWithFormat:@"email=%@&qid=%@&atext=%@",username,self.qid,self.textBox.text];
+    NSDictionary *postDicionary = [self sendMessage:message toAddress:POST];
     if ([[postDicionary objectForKey:@"success"] integerValue]==1) {
         [self.navigationController popViewControllerAnimated:YES];
     } else {
@@ -83,6 +79,10 @@
     // Do any additional setup after loading the view.
 }
 
+-(void) viewWillAppear:(BOOL)animated {
+    self.navigationItem.title = @"Post an Answer";
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -90,14 +90,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

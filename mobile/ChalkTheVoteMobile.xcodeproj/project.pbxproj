@@ -37,6 +37,7 @@
 		E886768918F38D2F0090EB19 /* CTVPostQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E886768818F38D2F0090EB19 /* CTVPostQuestionViewController.m */; };
 		E8B4306D1901F25300982321 /* round_icon_flat_green_clear.png in Resources */ = {isa = PBXBuildFile; fileRef = E8B4306C1901F25300982321 /* round_icon_flat_green_clear.png */; };
 		E8B4306F1901F26200982321 /* round_icon_flat_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = E8B4306E1901F26200982321 /* round_icon_flat_grey.png */; };
+		E8DCFE2D19081A5600ABE0E0 /* CTVPostAnswerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8DCFE2C19081A5600ABE0E0 /* CTVPostAnswerViewController.m */; };
 		E8EA977B18ECE4F900B32C3D /* CTVLiveBoardTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8EA977A18ECE4F900B32C3D /* CTVLiveBoardTableViewController.m */; };
 		E8EA977E18ECE93700B32C3D /* CTVViewQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8EA977D18ECE93700B32C3D /* CTVViewQuestionViewController.m */; };
 		E8EA978118EE4FF100B32C3D /* CTVRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8EA978018EE4FF100B32C3D /* CTVRegistrationViewController.m */; };
@@ -91,6 +92,8 @@
 		E886768818F38D2F0090EB19 /* CTVPostQuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTVPostQuestionViewController.m; sourceTree = "<group>"; };
 		E8B4306C1901F25300982321 /* round_icon_flat_green_clear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = round_icon_flat_green_clear.png; sourceTree = "<group>"; };
 		E8B4306E1901F26200982321 /* round_icon_flat_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = round_icon_flat_grey.png; sourceTree = "<group>"; };
+		E8DCFE2B19081A5600ABE0E0 /* CTVPostAnswerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTVPostAnswerViewController.h; sourceTree = "<group>"; };
+		E8DCFE2C19081A5600ABE0E0 /* CTVPostAnswerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTVPostAnswerViewController.m; sourceTree = "<group>"; };
 		E8EA977918ECE4F900B32C3D /* CTVLiveBoardTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTVLiveBoardTableViewController.h; sourceTree = "<group>"; };
 		E8EA977A18ECE4F900B32C3D /* CTVLiveBoardTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTVLiveBoardTableViewController.m; sourceTree = "<group>"; };
 		E8EA977C18ECE93700B32C3D /* CTVViewQuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTVViewQuestionViewController.h; sourceTree = "<group>"; };
@@ -188,6 +191,8 @@
 				E8EA978018EE4FF100B32C3D /* CTVRegistrationViewController.m */,
 				E886768718F38D2F0090EB19 /* CTVPostQuestionViewController.h */,
 				E886768818F38D2F0090EB19 /* CTVPostQuestionViewController.m */,
+				E8DCFE2B19081A5600ABE0E0 /* CTVPostAnswerViewController.h */,
+				E8DCFE2C19081A5600ABE0E0 /* CTVPostAnswerViewController.m */,
 			);
 			path = ChalkTheVoteMobile;
 			sourceTree = "<group>";
@@ -336,6 +341,7 @@
 				E8EA977B18ECE4F900B32C3D /* CTVLiveBoardTableViewController.m in Sources */,
 				E8EA978118EE4FF100B32C3D /* CTVRegistrationViewController.m in Sources */,
 				E80F2B2018DA06A100035BFA /* CTVClassesTableViewController.m in Sources */,
+				E8DCFE2D19081A5600ABE0E0 /* CTVPostAnswerViewController.m in Sources */,
 				E80F2B2618DA06E900035BFA /* CTVAddClassViewController.m in Sources */,
 				E80F2AF718D8B78700035BFA /* CTVAppDelegate.m in Sources */,
 				E8EA977E18ECE93700B32C3D /* CTVViewQuestionViewController.m in Sources */,

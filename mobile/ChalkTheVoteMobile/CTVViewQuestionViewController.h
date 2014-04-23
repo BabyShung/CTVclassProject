@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CTVViewQuestionViewController : UIViewController
+@interface CTVViewQuestionViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic,strong) NSString *question;
 @property (nonatomic,strong) NSString *qID;
 @property (nonatomic,strong) NSString *qVotes;
