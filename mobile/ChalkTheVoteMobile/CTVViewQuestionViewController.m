@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *questionField;
 @property (weak, nonatomic) IBOutlet UITableView *answerTable;
 @property (weak, nonatomic) NSArray *answerArray;
+@property NSTimer *timer;
 @end
 
 @implementation CTVViewQuestionViewController
@@ -81,6 +82,10 @@
     return self;
 }
 
+-(void) viewWillDisappear:(BOOL)animated {
+    [self.timer invalidate];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -95,6 +100,9 @@
 
 -(void) viewWillAppear:(BOOL)animated {
     self.questionField.text = self.question;
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:10
+                                                  target:self selector:@selector(reloadTable)
+                                                userInfo:nil repeats:YES];
     [self reloadTable];
 }
 
