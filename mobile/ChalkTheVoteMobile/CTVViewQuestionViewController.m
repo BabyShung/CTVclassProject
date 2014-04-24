@@ -166,7 +166,23 @@
     av.image = [UIImage imageNamed:@"cell_back3.png"];
     cell.backgroundView = av;
     
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     
+    if (voted==0) {
+        button.frame = CGRectMake(0, 0, 40, 40);
+        [button addTarget:self action:@selector(voteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        UIImage *buttonImage = [UIImage imageNamed:@"ico1_off_clear.png"];
+        [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+        [button setTag:[aid integerValue]];
+        
+    } else if (voted==1) {
+        button.frame = CGRectMake(0, 0, 40, 40);
+        UIImage *buttonImage2 = [UIImage imageNamed:@"ico1_off.png"];
+        [button setBackgroundImage:buttonImage2 forState:UIControlStateNormal];
+    }
+    
+    
+    /*
     UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     
     if (voted==0) {
@@ -182,7 +198,7 @@
         [button setTitle:@"Voted" forState:UIControlStateNormal];
         button.backgroundColor = [UIColor greenColor];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    }
+    } */
     
     //button.frame = desiredLeft;
     [cell.contentView addSubview:button];
