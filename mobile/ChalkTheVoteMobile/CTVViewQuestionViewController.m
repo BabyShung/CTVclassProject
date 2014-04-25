@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *answerTable;
 @property (weak, nonatomic) NSArray *answerArray;
 @property NSTimer *timer;
+@property BOOL emptyAnswerArray;
 @end
 
 @implementation CTVViewQuestionViewController
@@ -51,7 +52,8 @@
     NSString *message = [NSString stringWithFormat:@"email=%@&qid=%@",[defaults objectForKey:@"username"],self.qID];
     NSDictionary *answerDictionary = [self sendMessage:message toAddress:REFRESH];
     self.answerArray = [answerDictionary objectForKey:@"answerdetails"];
-    NSLog(@"Answers Array: %@",self.answerArray);
+    if ([self.answerArray count] == 0) { self.emptyAnswerArray = YES; }
+    else { self.emptyAnswerArray = NO;}
     [self.answerTable reloadData];
     NSLog(@"Refreshed Table");
 }
@@ -140,6 +142,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (self.emptyAnswerArray) { return 1; }
     return [self.answerArray count];
 }
 
@@ -152,7 +155,13 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
     }
-    
+    cell.textLabel.textColor = [UIColor whiteColor]; //added
+    cell.textLabel.numberOfLines = 0;
+    cell.textLabel.font = [UIFont fontWithName:@"Hoefler Text" size:16.0f];
+    self.answerTable.separatorColor = [UIColor clearColor]; //added
+    self.answerTable.backgroundView = [[UIImageView alloc] initWithImage:
+                                       [UIImage imageNamed:@"CTV_app_background_4.png"]];
+    if (!self.emptyAnswerArray) {
     NSString *string = [self.answerArray objectAtIndex:indexPath.row];
     NSArray *array = [string componentsSeparatedByString:@";"];
     NSString *aid = [[array objectAtIndex:0] substringFromIndex:1];
@@ -161,12 +170,7 @@
     NSInteger voted = [[[array objectAtIndex:3] substringToIndex:2] integerValue];
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@\t%@",atext,aVotes];
-    cell.textLabel.textColor = [UIColor whiteColor]; //added
-    cell.textLabel.numberOfLines = 0;
-    cell.textLabel.font = [UIFont fontWithName:@"Hoefler Text" size:16.0f];
-    self.answerTable.separatorColor = [UIColor clearColor]; //added
-    self.answerTable.backgroundView = [[UIImageView alloc] initWithImage:
-                                     [UIImage imageNamed:@"CTV_app_background_4.png"]];
+
     //set cell background gradient image
     UIImageView *av = [[UIImageView alloc] initWithFrame:CGRectMake(20, 20, 277, 58)];
     av.backgroundColor = [UIColor clearColor];
@@ -216,7 +220,7 @@
     UIImageView *accessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
     [accessoryView setImage:[UIImage imageNamed:@"round_icon_flat_grey.png"]];
     [cell setAccessoryView:button];
-    
+    }
     //[self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
     
     //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CTV_app_background.png"]]; //added

@@ -16,6 +16,7 @@
 
 @interface CTVLiveBoardTableViewController ()
 @property NSTimer *timer;
+@property BOOL emptyQuestionArray;
 @end
 
 @implementation CTVLiveBoardTableViewController
@@ -114,6 +115,8 @@
     
     NSDictionary *questionsDictionary = [self sendMessage:message toAddress:REFRESH];
     self.questionArray = [NSMutableArray arrayWithArray:[questionsDictionary objectForKey:@"qdetails"]];
+    if ([self.questionArray count] == 0) {self.emptyQuestionArray = YES;}
+    else { self.emptyQuestionArray = NO; }
     [self.tableView reloadData];
     NSLog(@"Refreshed Table");
 }
@@ -127,6 +130,7 @@
 #pragma mark - Table view data source
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (self.emptyQuestionArray) { return; }
     NSString *string = [self.questionArray objectAtIndex:indexPath.row];
     NSArray *array = [string componentsSeparatedByString:@";"];
     NSString *qid = [array objectAtIndex:0];
@@ -163,6 +167,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (self.emptyQuestionArray) { return 1; }
     return [self.questionArray count];
 }
 
@@ -198,54 +203,58 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
     }
-    NSString *string = [self.questionArray objectAtIndex:indexPath.row];
-    NSArray *array = [string componentsSeparatedByString:@";"];
-    NSString *qid = [array objectAtIndex:0];
-    qid = [qid substringFromIndex:1];
-    NSString *qtext = [array objectAtIndex:1];
-    NSString *qVotes = [array objectAtIndex:2];
-    NSInteger voted = [[[array objectAtIndex:3] substringToIndex:2] integerValue];
 
-    cell.textLabel.text = [NSString stringWithFormat:@"%@\t%@",qtext,qVotes];
-    
     cell.textLabel.textColor = [UIColor whiteColor]; //added
     cell.textLabel.numberOfLines = 0;
     cell.textLabel.font = [UIFont fontWithName:@"Hoefler Text" size:16.0f];
     self.tableView.separatorColor = [UIColor clearColor]; //added
     self.tableView.backgroundView = [[UIImageView alloc] initWithImage:
                                      [UIImage imageNamed:@"CTV_app_background_4.png"]];
-    //set cell background gradient image
-    UIImageView *av = [[UIImageView alloc] initWithFrame:CGRectMake(20, 20, 277, 58)];
-    av.backgroundColor = [UIColor clearColor];
-    av.opaque = NO;
-    av.image = [UIImage imageNamed:@"cell_back3.png"];
-    cell.backgroundView = av;
+
     
-    
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    
-    if (voted==0) {
-    button.frame = CGRectMake(0, 0, 40, 40);
-    [button addTarget:self action:@selector(voteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    UIImage *buttonImage = [UIImage imageNamed:@"ico1_off_clear.png"];
-    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [button setTag:[qid integerValue]];
+
+    if (!self.emptyQuestionArray) {
+        //set cell background gradient image
+        UIImageView *av = [[UIImageView alloc] initWithFrame:CGRectMake(20, 20, 277, 58)];
+        av.backgroundColor = [UIColor clearColor];
+        av.opaque = NO;
+        av.image = [UIImage imageNamed:@"cell_back3.png"];
+        cell.backgroundView = av;
+        NSString *string = [self.questionArray objectAtIndex:indexPath.row];
+        NSArray *array = [string componentsSeparatedByString:@";"];
+        NSString *qid = [array objectAtIndex:0];
+        qid = [qid substringFromIndex:1];
+        NSString *qtext = [array objectAtIndex:1];
+        NSString *qVotes = [array objectAtIndex:2];
+        NSInteger voted = [[[array objectAtIndex:3] substringToIndex:2] integerValue];
         
-    } else if (voted==1) {
-        button.frame = CGRectMake(0, 0, 40, 40);
-        UIImage *buttonImage2 = [UIImage imageNamed:@"ico1_off.png"];
-        [button setBackgroundImage:buttonImage2 forState:UIControlStateNormal];
-    }
+        
+        cell.textLabel.text = [NSString stringWithFormat:@"%@\t%@",qtext,qVotes];
+
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     
+        if (voted==0) {
+            button.frame = CGRectMake(0, 0, 40, 40);
+            [button addTarget:self action:@selector(voteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+            UIImage *buttonImage = [UIImage imageNamed:@"ico1_off_clear.png"];
+            [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+            [button setTag:[qid integerValue]];
+        
+        } else if (voted==1) {
+            button.frame = CGRectMake(0, 0, 40, 40);
+            UIImage *buttonImage2 = [UIImage imageNamed:@"ico1_off.png"];
+            [button setBackgroundImage:buttonImage2 forState:UIControlStateNormal];
+        }
+            //button.frame = desiredLeft;
+            [cell.contentView addSubview:button];
+            [cell.contentView bringSubviewToFront:button];
+            [cell addSubview:button];
+        
+            UIImageView *accessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+            [accessoryView setImage:[UIImage imageNamed:@"round_icon_flat_grey.png"]];
+            [cell setAccessoryView:button];
+    }
 
-    //button.frame = desiredLeft;
-    [cell.contentView addSubview:button];
-    [cell.contentView bringSubviewToFront:button];
-    [cell addSubview:button];
-
-    UIImageView *accessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
-    [accessoryView setImage:[UIImage imageNamed:@"round_icon_flat_grey.png"]];
-    [cell setAccessoryView:button];
     cell.backgroundColor  = [UIColor clearColor]; //added
     cell.selectedBackgroundView =  [[UIImageView alloc] initWithImage:[ [UIImage imageNamed:@"cell_back3_selected.png"] stretchableImageWithLeftCapWidth:0.0 topCapHeight:5.0] ];
     return cell;

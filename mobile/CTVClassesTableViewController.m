@@ -13,6 +13,7 @@
 
 @interface CTVClassesTableViewController ()
 @property (nonatomic,strong) NSString *className;
+@property BOOL emptyClassArray;
 @end
 
 @implementation CTVClassesTableViewController
@@ -127,11 +128,17 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if ([self.classesArray count] == 0) {
+        self.emptyClassArray = YES;
+        return 1;
+    }
+    self.emptyClassArray = NO;
     return [self.classesArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+
     static NSString *simpleTableIdentifier = @"SimpleTableItem";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
@@ -139,7 +146,6 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
     }
-    cell.textLabel.text = [NSString stringWithFormat:@"%@",[self.classesArray objectAtIndex:indexPath.row]];
     self.tableView.separatorColor = [UIColor clearColor];
     cell.textLabel.textColor = [UIColor whiteColor]; //added
     cell.textLabel.font = [UIFont fontWithName:@"Hoefler Text" size:25.0f];
@@ -148,6 +154,10 @@
                                      [UIImage imageNamed:@"CTV_class_selection.png"]];
     cell.backgroundColor  = [UIColor clearColor]; //added
     cell.selectedBackgroundView =  [[UIImageView alloc] initWithImage:[ [UIImage imageNamed:@"cell_back3_selected.png"] stretchableImageWithLeftCapWidth:0.0 topCapHeight:5.0] ];
+    
+    if (!self.emptyClassArray) {
+        cell.textLabel.text = [NSString stringWithFormat:@"%@",[self.classesArray objectAtIndex:indexPath.row]];
+    }
     return cell;
 }
 
