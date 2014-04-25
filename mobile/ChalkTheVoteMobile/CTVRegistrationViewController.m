@@ -27,6 +27,9 @@
     return _usernameField;
 }
 - (IBAction)registerButtonPressed:(id)sender {
+    
+    if ( ([self.usernameField.text length] > 0) && ([self.emailField.text length] > 0) && ([self.passwordField.text length] >0) ) {
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *message = [NSString stringWithFormat:@"username=%@&email=%@&password=%@",self.usernameField.text,self.emailField.text,self.passwordField.text];
     NSDictionary *registrationDictionary = [self sendMessage:message toAddress:REGISTER];
@@ -36,6 +39,7 @@
         [defaults setObject:[NSMutableArray arrayWithArray:[coursesDictionary objectForKey:@"courselist"]] forKey:@"classlist"];
         [self performSegueWithIdentifier:@"registerLogin" sender:self];
     }
+    } 
 }
 
 - (NSDictionary*) sendMessage:(NSString*)message toAddress:(NSString*)address {
