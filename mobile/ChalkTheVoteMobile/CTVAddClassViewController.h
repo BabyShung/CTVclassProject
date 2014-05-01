@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CTVAddClassViewController : UIViewController
+@interface CTVAddClassViewController : UIViewController<UITextFieldDelegate>
 
 @end

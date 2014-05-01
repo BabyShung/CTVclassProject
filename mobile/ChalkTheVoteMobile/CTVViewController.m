@@ -70,7 +70,7 @@
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"login"]) {
-
+        
     }
 }
 
@@ -97,6 +97,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.usernameField.delegate = self;
+    self.passwordField.delegate = self;
     //self.view.backgroundColor = [UIColor clearColor];
     UIGraphicsBeginImageContext(self.view.frame.size);
     ;[[UIImage imageNamed:@"CTV_app_background.png"] drawInRect:self.view.bounds];
@@ -160,6 +162,19 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    return YES;
+}
+
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
 }
 
 @end

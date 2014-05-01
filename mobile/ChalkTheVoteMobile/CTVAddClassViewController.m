@@ -66,6 +66,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.codeField.delegate = self;
     UIGraphicsBeginImageContext(self.view.frame.size);
     ;[[UIImage imageNamed:@"CTV_app_background_4.png"] drawInRect:self.view.bounds];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
@@ -84,6 +85,18 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    return YES;
+}
+
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
 }
 
 @end

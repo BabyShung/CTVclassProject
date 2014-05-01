@@ -84,6 +84,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.emailField.delegate = self;
+    self.passwordField.delegate = self;
+    self.usernameField.delegate = self;
     UIGraphicsBeginImageContext(self.view.frame.size);
     [[UIImage imageNamed:@"CTV_app_background.png"] drawInRect:self.view.bounds];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
@@ -108,5 +111,17 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    return YES;
+}
+
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
 
 @end

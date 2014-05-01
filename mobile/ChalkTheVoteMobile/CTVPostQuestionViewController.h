@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CTVPostQuestionViewController : UIViewController
+@interface CTVPostQuestionViewController : UIViewController<UITextViewDelegate>
 @property (nonatomic,weak) NSString *className;
 @end

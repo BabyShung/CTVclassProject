@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CTVViewController : UIViewController
+@interface CTVViewController : UIViewController<UITextFieldDelegate>
 
 @end

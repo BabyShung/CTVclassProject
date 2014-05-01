@@ -73,6 +73,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.textBox.delegate = self;
     UIGraphicsBeginImageContext(self.view.frame.size);
     [[UIImage imageNamed:@"CTV_app_background.png"] drawInRect:self.view.bounds];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
@@ -99,5 +100,17 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+{
+    return YES;
+}
+
+
+- (BOOL)textViewShouldReturn:(UITextView *)textView
+{
+    [textView resignFirstResponder];
+    return YES;
+}
 
 @end
