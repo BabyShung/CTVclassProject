@@ -77,6 +77,13 @@
                              forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     self.navigationController.navigationBar.translucent = YES;
+    
+  
+    
+    
+
+    
+    
     /*self.timer = [NSTimer scheduledTimerWithTimeInterval:10
                                                       target:self selector:@selector(viewWillAppear:)
                                                     userInfo:nil repeats:YES]; */
@@ -97,6 +104,9 @@
                                                   target:self selector:@selector(reloadTable)
                                                 userInfo:nil repeats:YES];
     [self reloadTable];
+    
+    
+    
     NSUInteger arrayCount = [self.questionArray count];
     if (arrayCount==0 && !self.popUpShowed){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"The QBoard"
@@ -130,6 +140,12 @@
 #pragma mark - Table view data source
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    CATransform3D rotation;
+    rotation = CATransform3DMakeRotation( (90.0*M_PI)/180, 0.0, 0.7, 0.4);
+    rotation.m34 = 1.0/ -600;
+    
+    
     if (self.emptyQuestionArray) { return; }
     NSString *string = [self.questionArray objectAtIndex:indexPath.row];
     NSArray *array = [string componentsSeparatedByString:@";"];
@@ -194,9 +210,12 @@
 
 
 
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *simpleTableIdentifier = @"SimpleTableItem";
+    
+    
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
     
@@ -210,7 +229,34 @@
     self.tableView.separatorColor = [UIColor clearColor]; //added
     self.tableView.backgroundView = [[UIImageView alloc] initWithImage:
                                      [UIImage imageNamed:@"CTV_app_background_4.png"]];
-
+    /*
+    //1. Setup the CATransform3D structure
+    CATransform3D rotation;
+    rotation = CATransform3DMakeRotation( (90.0*M_PI)/180, 0.0, 0.7, 0.4);
+    rotation.m34 = 1.0/ -600;
+    
+    
+    //2. Define the initial state (Before the animation)
+    cell.layer.shadowColor = [[UIColor blackColor]CGColor];
+    cell.layer.shadowOffset = CGSizeMake(10, 10);
+    cell.alpha = 0;
+    
+    cell.layer.transform = rotation;
+    cell.layer.anchorPoint = CGPointMake(0, 0.5);
+    
+    
+    //3. Define the final state (After the animation) and commit the animation
+    [UIView beginAnimations:@"rotation" context:NULL];
+    [UIView setAnimationDuration:0.8];
+    cell.layer.transform = CATransform3DIdentity;
+    cell.alpha = 1;
+    cell.layer.shadowOffset = CGSizeMake(0, 0);
+    [UIView commitAnimations];
+*/
+    
+  
+    
+   
     
 
     if (!self.emptyQuestionArray) {
@@ -259,6 +305,29 @@
     cell.selectedBackgroundView =  [[UIImageView alloc] initWithImage:[ [UIImage imageNamed:@"cell_back3_selected.png"] stretchableImageWithLeftCapWidth:0.0 topCapHeight:5.0] ];
     return cell;
 }
+
+
+- (void)moveImage:(UITableViewCell *)image duration:(NSTimeInterval)duration
+            curve:(int)curve x:(CGFloat)x y:(CGFloat)y
+{
+    // Setup the animation
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:duration];
+    [UIView setAnimationCurve:curve];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    //  Â
+    // The transform matrix
+    CGAffineTransform transform = CGAffineTransformMakeTranslation(x, y);
+    image.transform = transform;
+    //Â
+    // Commit the changes
+    [UIView commitAnimations];
+    // Â
+}
+
+
+
+
 
 /*
  // Override to support conditional editing of the table view.

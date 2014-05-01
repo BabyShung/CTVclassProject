@@ -14,7 +14,7 @@
 @interface CTVViewQuestionViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *questionField;
 @property (weak, nonatomic) IBOutlet UITableView *answerTable;
-@property (weak, nonatomic) NSArray *answerArray;
+@property (strong, nonatomic) NSArray *answerArray;
 @property NSTimer *timer;
 @property BOOL emptyAnswerArray;
 @end
@@ -75,6 +75,25 @@
 }
 
 
+- (void)moveImage:(UITableView *)image duration:(NSTimeInterval)duration
+            curve:(int)curve x:(CGFloat)x y:(CGFloat)y
+{
+    // Setup the animation
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:duration];
+    [UIView setAnimationCurve:curve];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    //  Â
+    // The transform matrix
+    CGAffineTransform transform = CGAffineTransformMakeTranslation(x, y);
+    image.transform = transform;
+    //Â
+    // Commit the changes
+    [UIView commitAnimations];
+    // Â
+}
+
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -92,12 +111,30 @@
 {
     [super viewDidLoad];
     UIGraphicsBeginImageContext(self.view.frame.size);
-    [[UIImage imageNamed:@"CTV_app_background.png"] drawInRect:self.view.bounds];
+    [[UIImage imageNamed:@"CTV_app_background_4.png"] drawInRect:self.view.bounds];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     self.view.backgroundColor = [UIColor colorWithPatternImage:image];
     self.answerTable.delegate = self;
     self.answerTable.dataSource = self;
+   /*
+    UIBarButtonItem *shareItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:nil];
+    UIBarButtonItem *addAnswer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:nil];
+    NSArray *actionButtonItems = @[shareItem,addAnswer];
+    self.navigationItem.rightBarButtonItems = actionButtonItems;
+    */
+    
+    UITableView *tableToMove = self.answerTable;
+    
+    tableToMove.frame = CGRectMake(10, 10, 200, 1000);
+    [self.view addSubview:tableToMove];
+    
+    
+    // Â
+    // Move the image
+    [self moveImage:tableToMove duration:0.4
+              curve:UIViewAnimationCurveLinear x:0.0 y:-410.0];
+    
 }
 
 -(void) viewWillAppear:(BOOL)animated {
@@ -146,6 +183,23 @@
     return [self.answerArray count];
 }
 
+
+
+- (CGFloat)textViewHeightForAttributedText: (NSAttributedString*)text andWidth: (CGFloat)width {
+    UITextView *calculationView = [[UITextView alloc] init];
+    [calculationView setAttributedText:text];
+    CGSize size = [calculationView sizeThatFits:CGSizeMake(width, FLT_MAX)];
+    return size.height;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 100;
+}
+
+
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *simpleTableIdentifier = @"SimpleTableItem";
@@ -159,8 +213,9 @@
     cell.textLabel.numberOfLines = 0;
     cell.textLabel.font = [UIFont fontWithName:@"Hoefler Text" size:16.0f];
     self.answerTable.separatorColor = [UIColor clearColor]; //added
-    self.answerTable.backgroundView = [[UIImageView alloc] initWithImage:
-                                       [UIImage imageNamed:@"CTV_app_background_4.png"]];
+    //self.answerTable.backgroundView = [[UIImageView alloc] initWithImage:
+      //                                 [UIImage imageNamed:@"CTV_app_background_4.png"]];
+    self.answerTable.backgroundColor = [UIColor clearColor];
     if (!self.emptyAnswerArray) {
     NSString *string = [self.answerArray objectAtIndex:indexPath.row];
     NSArray *array = [string componentsSeparatedByString:@";"];
@@ -170,6 +225,7 @@
     NSInteger voted = [[[array objectAtIndex:3] substringToIndex:2] integerValue];
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@\t%@",atext,aVotes];
+    
 
     //set cell background gradient image
     UIImageView *av = [[UIImageView alloc] initWithFrame:CGRectMake(20, 20, 277, 58)];
@@ -177,6 +233,10 @@
     av.opaque = NO;
     av.image = [UIImage imageNamed:@"cell_back3.png"];
     cell.backgroundView = av;
+        
+ 
+        
+        
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     
