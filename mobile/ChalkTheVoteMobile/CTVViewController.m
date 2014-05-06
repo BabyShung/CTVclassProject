@@ -121,14 +121,14 @@
     [self moveImage:imageToMove duration:1.0
               curve:UIViewAnimationCurveLinear x:0.0 y:5.0];
    
-    
+    /*
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ChalkTheVote Alpha Release"
                                                     message:@"Welcome to the CTV alpha release. It is recomended testing is done on the 4 inch iPhone. Add this course: 'er45' to get started."
                                                    delegate:nil
                                           cancelButtonTitle:@"Got it"
                                           otherButtonTitles:nil];
     [alert show];
-
+*/
     
     
     
