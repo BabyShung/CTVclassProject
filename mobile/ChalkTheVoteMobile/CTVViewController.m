@@ -12,6 +12,7 @@
 
 #define LOGIN @"http://chalkthevote.com/Trial/iosLoginCheck.php"
 #define COURSELIST @"http://chalkthevote.com/Trial/iosCourseList.php"
+#define SESSION @"http://chalkthevote.com/Trial/iosSessionClose.php"
 
 @interface CTVViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *CTVlogo;
@@ -129,6 +130,17 @@
 */
     
     
+    
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *user = [defaults objectForKey:@"username"];
+    if ([user length] > 0) {
+        NSString *message = [NSString stringWithFormat:@"email=%@", user];
+        [self sendMessage:message toAddress:SESSION];
+        [defaults setObject:@"" forKey:@"username"];
+    }
     
 }
 

@@ -10,10 +10,13 @@
 #import "CTVLiveBoardTableViewController.h"
 
 #define COURSELIST @"http://chalkthevote.com/Trial/iosCourseList.php"
+#define MODLIST @"http://chalkthevote.com/Trial/iosModeratorCourseList.php"
 
 @interface CTVClassesTableViewController ()
 @property (nonatomic,strong) NSString *className;
 @property BOOL emptyClassArray;
+@property (strong,nonatomic) NSArray *coursesOwned;
+@property BOOL userOwnsClass;
 @end
 
 @implementation CTVClassesTableViewController
@@ -90,6 +93,8 @@
     NSString *message = [NSString stringWithFormat:@"email=%@",[defaults objectForKey:@"username"]];
     NSDictionary *coursesDictionary = [self sendMessage:message toAddress:COURSELIST];
     self.classesArray = [NSMutableArray arrayWithArray:[coursesDictionary objectForKey:@"courselist"]];
+    NSDictionary *coursesOwned = [self sendMessage:message toAddress:MODLIST];
+    self.coursesOwned = [coursesOwned objectForKey:@"courseList"];
     NSUInteger arrayCount = [self.classesArray count];
     if (arrayCount==0 && !self.popUpShowed){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Welcome!"
@@ -134,6 +139,15 @@
     }
     self.emptyClassArray = NO;
     return [self.classesArray count];
+}
+
+- (BOOL) userOwnsClass:(NSString *) coursename {
+    for (int i = 0; i < [self.coursesOwned count]; i++) {
+        if ([[NSString stringWithFormat:@"%@",[self.coursesOwned objectAtIndex:i]] compare:coursename]) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -13,6 +13,7 @@
 #define REFRESH @"http://chalkthevote.com/Trial/iosQboardRefresh.php"
 #define VOTE @"http://chalkthevote.com/Trial/iosVoteQuestion.php"
 #define POSTQ @"http://chalkthevote.com/Trial/iosPushLiveQuestion.php"
+#define SESSION @"http://chalkthevote.com/Trial/iosSessionStart.php"
 
 @interface CTVLiveBoardTableViewController ()
 @property NSTimer *timer;
@@ -99,6 +100,10 @@
 
 
 -(void) viewWillAppear:(BOOL)animated {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *uid = [defaults objectForKey:@"username"];
+    NSString *message = [NSString stringWithFormat:@"email=%@&classname=%@",uid,self.className];
+    [self sendMessage:message toAddress:SESSION];
     self.navigationItem.title = self.className;
     self.timer = [NSTimer scheduledTimerWithTimeInterval:10
                                                   target:self selector:@selector(reloadTable)

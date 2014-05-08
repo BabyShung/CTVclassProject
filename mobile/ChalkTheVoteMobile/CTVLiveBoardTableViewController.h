@@ -15,5 +15,6 @@
 @property (nonatomic,strong) NSString *qID;
 @property (nonatomic,strong) NSString *qVotes;
 @property (assign, nonatomic) CATransform3D initialTransformation;
+@property BOOL userOwnsClass;
 @property BOOL popUpShowed;
 @end
