@@ -92,7 +92,6 @@
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     self.view.backgroundColor = [UIColor colorWithPatternImage:image];
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning

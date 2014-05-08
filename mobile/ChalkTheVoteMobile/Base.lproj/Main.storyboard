@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Xdr-MM-fdk">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="7yn-HN-4Gs">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -71,7 +71,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="registrationButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="BEc-AS-h8g"/>
+                                    <segue destination="Hgz-Lh-EWe" kind="push" id="m4X-Zd-oyc"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ChalkTheVote_newLogo_gradient.png" translatesAutoresizingMaskIntoConstraints="NO" id="C48-ah-Flf">
@@ -98,12 +98,11 @@
                         <outlet property="usernameField" destination="k0o-YP-B65" id="PMh-di-Y8B"/>
                         <outlet property="usernameIMG" destination="YKc-Dl-7gW" id="WLv-i4-whr"/>
                         <segue destination="Aht-8i-b4q" kind="modal" identifier="login" modalTransitionStyle="crossDissolve" id="6PM-CD-tmn"/>
-                        <segue destination="Hgz-Lh-EWe" kind="push" identifier="register" id="fy3-oz-KRK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1505" y="235"/>
+            <point key="canvasLocation" x="2047" y="185"/>
         </scene>
         <!--Registration View Controller-->
         <scene sceneID="1aZ-Jf-UPI">
@@ -179,7 +178,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="32Z-Od-YFj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2033" y="1060"/>
+            <point key="canvasLocation" x="2541" y="664"/>
         </scene>
         <!--Classes Table View Controller-->
         <scene sceneID="2Qe-iv-iWr">
@@ -208,6 +207,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="rtc-Gn-8sq">
+                        <barButtonItem key="leftBarButtonItem" title="Log Out" id="xm8-Nv-PA3">
+                            <connections>
+                                <segue destination="vXZ-lx-hvc" kind="modal" id="8cg-47-Eus"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="+" id="O2i-cL-Jao">
                             <connections>
                                 <action selector="addCourseButtonPressed:" destination="HpL-rs-ONy" id="oOD-5N-Hr1"/>
@@ -220,7 +224,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zhQ-iC-d9z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3092" y="235"/>
+            <point key="canvasLocation" x="3618" y="235"/>
         </scene>
         <!--Live Board Table View Controller-->
         <scene sceneID="saz-Uw-Boi">
@@ -249,6 +253,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="w8S-Mr-bEt">
+                        <barButtonItem key="leftBarButtonItem" id="Wjc-UP-OF1"/>
                         <barButtonItem key="rightBarButtonItem" title="+" id="e31-eB-aFO">
                             <connections>
                                 <action selector="postQuestion:" destination="Jw0-HY-PcR" id="mh3-E4-Q2q"/>
@@ -259,7 +264,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hs5-eA-cyj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3638" y="235"/>
+            <point key="canvasLocation" x="4164" y="235"/>
         </scene>
         <!--View Question View Controller-->
         <scene sceneID="d6z-X0-Wfa">
@@ -412,7 +417,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vG8-NM-VIG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4169" y="235"/>
+            <point key="canvasLocation" x="4695" y="235"/>
         </scene>
         <!--Add Class View Controller - Add A Course-->
         <scene sceneID="3kS-TV-dsm">
@@ -484,25 +489,25 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jSF-xw-ckm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2566" y="235"/>
+            <point key="canvasLocation" x="3092" y="235"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="dBO-fu-Rbq">
+        <scene sceneID="V4s-WN-f9J">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Xdr-MM-fdk" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7yn-HN-4Gs" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="4gV-At-aCR">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="E5x-RE-yhH">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="Vgz-o7-Maa"/>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="Otb-CQ-uF9"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ako-Yf-6qL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dDr-U0-nqW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="979" y="235"/>
+            <point key="canvasLocation" x="1439" y="235"/>
         </scene>
     </scenes>
     <resources>
@@ -518,6 +523,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="xld-uq-Van"/>
+        <segue reference="8cg-47-Eus"/>
+        <segue reference="6PM-CD-tmn"/>
     </inferredMetricsTieBreakers>
 </document>

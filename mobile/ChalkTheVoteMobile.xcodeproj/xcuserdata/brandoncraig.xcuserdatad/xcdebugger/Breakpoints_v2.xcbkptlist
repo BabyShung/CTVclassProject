@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ChalkTheVoteMobile/CTVViewController.m"
-            timestampString = "418271361.822619"
+            timestampString = "421206818.434301"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
             landmarkName = "@implementation CTVViewController"
             landmarkType = "3">
          </BreakpointContent>

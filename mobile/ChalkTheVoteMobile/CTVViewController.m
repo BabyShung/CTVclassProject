@@ -23,9 +23,7 @@
 @end
 
 @implementation CTVViewController
-- (IBAction)registrationButtonPressed:(id)sender {
-    [self performSegueWithIdentifier:@"register" sender:self];
-}
+
 
 - (NSDictionary*) sendMessage:(NSString*)message toAddress:(NSString*)address {
     //TODO verify URL and add back in password
