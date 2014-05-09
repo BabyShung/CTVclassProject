@@ -14,6 +14,7 @@
 #define REFRESH @"http://chalkthevote.com/Trial/iosQboardRefresh.php"
 #define VOTE @"http://chalkthevote.com/Trial/iosVoteQuestion.php"
 #define POSTQ @"http://chalkthevote.com/Trial/iosPushLiveQuestion.php"
+#define SESSION @"http://chalkthevote.com/Trial/iosSessionStart.php"
 
 @interface CTVLiveBoardTableViewController ()
 @property NSTimer *timer;
@@ -45,7 +46,7 @@
         //NSLog(@"Error parsing JSON.");
     }
     else {
-        //NSLog(@"Array: %@", jsonArray);
+        NSLog(@"Array: %@", jsonArray);
     }
     return jsonArray;
 }
@@ -149,7 +150,9 @@
                                                 userInfo:nil repeats:YES];
     [self reloadTable];
     [self switchTitle];
-    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *message = [NSString stringWithFormat:@"email=%@&coursename=%@",[defaults objectForKey:@"username"],self.className];
+    [self sendMessage:message toAddress:SESSION];
     
     
     

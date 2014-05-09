@@ -94,6 +94,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:@"" forKey:@"username"];
     self.usernameField.delegate = self;
     self.passwordField.delegate = self;
     //self.view.backgroundColor = [UIColor clearColor];

@@ -63,8 +63,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:@"" forKey:@"username"];
     
     //prettify
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new]

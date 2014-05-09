@@ -71,7 +71,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Hgz-Lh-EWe" kind="push" id="dax-Sa-ihP"/>
+                                    <segue destination="bNe-nC-95n" kind="modal" id="dax-Sa-ihP"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ChalkTheVote_newLogo_gradient.png" translatesAutoresizingMaskIntoConstraints="NO" id="C48-ah-Flf">
@@ -179,11 +179,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="NNP-ze-tvn"/>
+                    <navigationItem key="navigationItem" id="NNP-ze-tvn">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="aZc-Q9-RZn">
+                            <connections>
+                                <segue destination="Xdr-MM-fdk" kind="modal" id="Scv-fO-7S0"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="emailField" destination="Ye0-JT-jDW" id="mtJ-M8-4cI"/>
-                        <outlet property="gear1" destination="Fyg-Ik-AdW" id="rhv-7B-Qex"/>
-                        <outlet property="gear2" destination="B6H-QR-GuP" id="30W-aj-Viw"/>
                         <outlet property="passwordField" destination="OrQ-va-rqg" id="wyP-zJ-Atp"/>
                         <outlet property="usernameField" destination="ept-Sj-E5d" id="yyn-0M-obW"/>
                         <segue destination="Aht-8i-b4q" kind="modal" identifier="registerLogin" id="xld-uq-Van"/>
@@ -191,7 +195,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="32Z-Od-YFj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2057" y="704"/>
+            <point key="canvasLocation" x="2583" y="704"/>
         </scene>
         <!--Classes Table View Controller-->
         <scene sceneID="2Qe-iv-iWr">
@@ -220,6 +224,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="rtc-Gn-8sq">
+                        <barButtonItem key="leftBarButtonItem" title="Log Out" id="BwQ-4T-yeZ">
+                            <connections>
+                                <segue destination="Xdr-MM-fdk" kind="modal" id="OSE-FO-GZc"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="+" id="O2i-cL-Jao">
                             <connections>
                                 <action selector="addCourseButtonPressed:" destination="HpL-rs-ONy" id="oOD-5N-Hr1"/>
@@ -232,7 +241,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zhQ-iC-d9z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3092" y="235"/>
+            <point key="canvasLocation" x="3618" y="235"/>
         </scene>
         <!--Live Board Table View Controller-->
         <scene sceneID="saz-Uw-Boi">
@@ -271,7 +280,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hs5-eA-cyj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3638" y="235"/>
+            <point key="canvasLocation" x="4164" y="235"/>
         </scene>
         <!--View Question View Controller-->
         <scene sceneID="d6z-X0-Wfa">
@@ -324,7 +333,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lzA-1w-Nck" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4169" y="1060"/>
+            <point key="canvasLocation" x="4695" y="1060"/>
         </scene>
         <!--Post Answer View Controller-->
         <scene sceneID="ZgL-5s-IhE">
@@ -373,7 +382,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="faN-jc-XlD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4644" y="1050"/>
+            <point key="canvasLocation" x="5170" y="1050"/>
         </scene>
         <!--Post Question View Controller-->
         <scene sceneID="hEZ-yA-ao5">
@@ -424,7 +433,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vG8-NM-VIG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4169" y="235"/>
+            <point key="canvasLocation" x="4695" y="235"/>
         </scene>
         <!--Add Class View Controller - Add A Course-->
         <scene sceneID="3kS-TV-dsm">
@@ -479,7 +488,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t2N-Kh-d65" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3638" y="1060"/>
+            <point key="canvasLocation" x="4164" y="1060"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hnd-Jz-oRJ">
@@ -497,7 +506,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jSF-xw-ckm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2566" y="235"/>
+            <point key="canvasLocation" x="3092" y="235"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="dBO-fu-Rbq">
@@ -515,7 +524,26 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ako-Yf-6qL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="979" y="235"/>
+            <point key="canvasLocation" x="957" y="182"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="M9h-dt-W5z">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bNe-nC-95n" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="AkJ-h1-rRm"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="0nl-bk-yMQ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Hgz-Lh-EWe" kind="relationship" relationship="rootViewController" id="Q5m-uD-7y6"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rBR-mH-sjS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2041" y="1036"/>
         </scene>
     </scenes>
     <resources>
@@ -532,6 +560,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="6PM-CD-tmn"/>
+        <segue reference="Scv-fO-7S0"/>
+        <segue reference="xld-uq-Van"/>
     </inferredMetricsTieBreakers>
 </document>
