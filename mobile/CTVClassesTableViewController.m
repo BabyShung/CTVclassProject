@@ -10,6 +10,8 @@
 #import "CTVLiveBoardTableViewController.h"
 
 #define COURSELIST @"http://chalkthevote.com/Trial/iosCourseList.php"
+#define MODLIST @"http://chalkthevote.com/Trial/iosModeratorCourseList.php"
+
 
 @interface CTVClassesTableViewController ()
 @property (nonatomic,strong) NSString *className;
@@ -89,7 +91,9 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *message = [NSString stringWithFormat:@"email=%@",[defaults objectForKey:@"username"]];
     NSDictionary *coursesDictionary = [self sendMessage:message toAddress:COURSELIST];
-    self.classesArray = [NSMutableArray arrayWithArray:[coursesDictionary objectForKey:@"courselist"]];
+    NSDictionary *moderatorDictionary = [self sendMessage:message toAddress:MODLIST];
+    self.classesArray = [NSMutableArray arrayWithArray:[moderatorDictionary objectForKey:@"courselist"]];
+    [self.classesArray addObjectsFromArray:[coursesDictionary objectForKey:@"courselist"]];
     NSUInteger arrayCount = [self.classesArray count];
     if (arrayCount==0 && !self.popUpShowed){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Welcome!"
