@@ -14,6 +14,8 @@
 @interface CTVRegistrationViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *emailField;
+@property (weak, nonatomic) IBOutlet UIImageView *gear1;
+@property (weak, nonatomic) IBOutlet UIImageView *gear2;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 
 
@@ -39,6 +41,25 @@
         [defaults setObject:[NSMutableArray arrayWithArray:[coursesDictionary objectForKey:@"courselist"]] forKey:@"classlist"];
         [self performSegueWithIdentifier:@"registerLogin" sender:self];
     }
+        
+        CABasicAnimation *rotation;
+        rotation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+        rotation.fromValue = [NSNumber numberWithFloat:0];
+        rotation.toValue = [NSNumber numberWithFloat:(2*M_PI)];
+        rotation.duration = 1.1; // Speed
+        rotation.repeatCount = HUGE_VALF; // Repeat forever. Can be a finite number.
+        
+        CABasicAnimation *rotation2;
+        rotation2 = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+        rotation2.fromValue = [NSNumber numberWithFloat:(2*M_PI)];
+        rotation2.toValue = [NSNumber numberWithFloat:0];
+        rotation2.duration = 1.1; // Speed
+        rotation2.repeatCount = HUGE_VALF; // Repeat forever. Can be a finite number.
+        
+        [self.gear1.layer addAnimation:rotation forKey:@"Spin"];
+        [self.gear2.layer addAnimation:rotation2 forKey:@"Spin"];
+        
+        
     } 
 }
 
@@ -92,6 +113,23 @@
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     self.view.backgroundColor = [UIColor colorWithPatternImage:image];
+    
+    CABasicAnimation *rotation;
+    rotation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+    rotation.fromValue = [NSNumber numberWithFloat:0];
+    rotation.toValue = [NSNumber numberWithFloat:(2*M_PI)];
+    rotation.duration = 15.1; // Speed
+    rotation.repeatCount = HUGE_VALF; // Repeat forever. Can be a finite number.
+    
+    CABasicAnimation *rotation2;
+    rotation2 = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+    rotation2.fromValue = [NSNumber numberWithFloat:(2*M_PI)];
+    rotation2.toValue = [NSNumber numberWithFloat:0];
+    rotation2.duration = 15.1; // Speed
+    rotation2.repeatCount = HUGE_VALF; // Repeat forever. Can be a finite number.
+    
+    [self.gear1.layer addAnimation:rotation forKey:@"Spin"];
+    [self.gear2.layer addAnimation:rotation2 forKey:@"Spin"];
 }
 
 - (void)didReceiveMemoryWarning

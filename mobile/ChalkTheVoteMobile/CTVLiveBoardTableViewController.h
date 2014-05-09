@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface CTVLiveBoardTableViewController : UITableViewController
 @property (nonatomic,strong) NSArray *questionArray;
 @property (nonatomic,strong) NSString *className;
@@ -15,6 +16,8 @@
 @property (nonatomic,strong) NSString *qID;
 @property (nonatomic,strong) NSString *qVotes;
 @property (assign, nonatomic) CATransform3D initialTransformation;
-@property BOOL userOwnsClass;
 @property BOOL popUpShowed;
+@property BOOL liveUsers;
+//@property BOOL liveUsers2;
+@property int  navBarSwitch;
 @end

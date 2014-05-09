@@ -12,7 +12,6 @@
 
 #define LOGIN @"http://chalkthevote.com/Trial/iosLoginCheck.php"
 #define COURSELIST @"http://chalkthevote.com/Trial/iosCourseList.php"
-#define SESSION @"http://chalkthevote.com/Trial/iosSessionClose.php"
 
 @interface CTVViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *CTVlogo;
@@ -24,7 +23,9 @@
 @end
 
 @implementation CTVViewController
-
+- (IBAction)registrationButtonPressed:(id)sender {
+    [self performSegueWithIdentifier:@"register" sender:self];
+}
 
 - (NSDictionary*) sendMessage:(NSString*)message toAddress:(NSString*)address {
     //TODO verify URL and add back in password
@@ -57,7 +58,9 @@
     NSString *message = [NSString stringWithFormat:@"email=%@&password=%@",self.usernameField.text,self.passwordField.text];
     NSDictionary *loginDictionary = [self sendMessage:message toAddress:LOGIN];
     if ([[loginDictionary objectForKey:@"success"] integerValue]==1) {
+        NSDictionary *coursesDictionary = [self sendMessage:message toAddress:COURSELIST];
         [defaults setObject:self.usernameField.text forKey:@"username"];
+        [defaults setObject:[NSMutableArray arrayWithArray:[coursesDictionary objectForKey:@"courselist"]] forKey:@"classlist"];
         [self performSegueWithIdentifier:@"login" sender:self];
     } else {
         self.errorField.text = @"Login Error: Try again";
@@ -94,8 +97,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:@"" forKey:@"username"];
     self.usernameField.delegate = self;
     self.passwordField.delegate = self;
     //self.view.backgroundColor = [UIColor clearColor];
@@ -119,6 +120,31 @@
     
     [self moveImage:imageToMove duration:1.0
               curve:UIViewAnimationCurveLinear x:0.0 y:5.0];
+    
+    
+    // Paralax Effects
+    // Set vertical effect
+    UIInterpolatingMotionEffect *verticalMotionEffect =
+    [[UIInterpolatingMotionEffect alloc]
+     initWithKeyPath:@"center.y"
+     type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+    verticalMotionEffect.minimumRelativeValue = @(-10);
+    verticalMotionEffect.maximumRelativeValue = @(10);
+    
+    // Set horizontal effect
+    UIInterpolatingMotionEffect *horizontalMotionEffect =
+    [[UIInterpolatingMotionEffect alloc]
+     initWithKeyPath:@"center.x"
+     type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+    horizontalMotionEffect.minimumRelativeValue = @(-10);
+    horizontalMotionEffect.maximumRelativeValue = @(10);
+    
+    // Create group to combine both
+    UIMotionEffectGroup *group = [UIMotionEffectGroup new];
+    group.motionEffects = @[horizontalMotionEffect, verticalMotionEffect];
+    
+    // Add both effects to your view
+    [self.view  addMotionEffect:group]; // might change to logo
    
     /*
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ChalkTheVote Alpha Release"
@@ -130,17 +156,6 @@
 */
     
     
-    
-}
-
-- (void) viewWillAppear:(BOOL)animated {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *user = [defaults objectForKey:@"username"];
-    if ([user length] > 0) {
-        NSString *message = [NSString stringWithFormat:@"email=%@", user];
-        [self sendMessage:message toAddress:SESSION];
-        [defaults setObject:@"" forKey:@"username"];
-    }
     
 }
 
