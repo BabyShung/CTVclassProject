@@ -20,4 +20,5 @@
 @property BOOL liveUsers;
 //@property BOOL liveUsers2;
 @property int  navBarSwitch;
+@property BOOL moderatorMode;
 @end

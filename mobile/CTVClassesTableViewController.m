@@ -17,6 +17,7 @@
 @property (nonatomic,strong) NSString *className;
 @property BOOL emptyClassArray;
 @property NSInteger classesOwned;
+@property BOOL moderatorMode;
 @end
 
 @implementation CTVClassesTableViewController
