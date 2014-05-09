@@ -10,13 +10,14 @@
 #import "CTVViewQuestionViewController.h"
 #import "CTVPostQuestionViewController.h"
 
+
 #define REFRESH @"http://chalkthevote.com/Trial/iosQboardRefresh.php"
 #define VOTE @"http://chalkthevote.com/Trial/iosVoteQuestion.php"
 #define POSTQ @"http://chalkthevote.com/Trial/iosPushLiveQuestion.php"
-#define SESSION @"http://chalkthevote.com/Trial/iosSessionStart.php"
 
 @interface CTVLiveBoardTableViewController ()
 @property NSTimer *timer;
+@property NSTimer *timer2;
 @property BOOL emptyQuestionArray;
 @end
 
@@ -48,6 +49,33 @@
     return jsonArray;
 }
 
+-(void)switchTitle{
+    
+    self.navBarSwitch+=1;
+
+    // Rotate between class title and number of live users, and class code
+    if(fmod(self.navBarSwitch,3)==0)
+    {
+        self.title = self.className;;
+      //  [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    }
+    else if(fmod(self.navBarSwitch,3)==1)
+    {
+        
+        self.title = @"Users in class: 3";
+        //[self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor greenColor]}];
+        
+    }
+    else
+    {
+    self.title = @"Class code: vZ4q";
+    }
+    
+    //self.liveUsers = !self.liveUsers;
+
+
+}
+
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -73,14 +101,24 @@
     self.questionArray = [questionDictionary objectForKey:@"qdetails"];
     NSLog(@"%@",self.questionArray); */
     //self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+    self.navBarSwitch=-1;
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
                              forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     self.navigationController.navigationBar.translucent = YES;
     
-  
+    self.tableView.separatorColor = [UIColor clearColor]; //added
+    self.tableView.backgroundView = [[UIImageView alloc] initWithImage:
+                                     [UIImage imageNamed:[ NSString stringWithFormat:@"image%u.png", 1+arc4random_uniform(1) ]]];
     
+  //  UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+   // imgView.image = [UIImage imageNamed:[ NSString stringWithFormat:@"image%u.png", 1+arc4random_uniform(1) ]];
+    //imgView.contentMode = UIViewAnimationOptionCurveEaseIn;
+    //imgView.layer.
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    self.navigationController.navigationBar.translucent = YES;
+  
     
 
     
@@ -100,22 +138,24 @@
 
 
 -(void) viewWillAppear:(BOOL)animated {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *uid = [defaults objectForKey:@"username"];
-    NSString *message = [NSString stringWithFormat:@"email=%@&classname=%@",uid,self.className];
-    [self sendMessage:message toAddress:SESSION];
     self.navigationItem.title = self.className;
     self.timer = [NSTimer scheduledTimerWithTimeInterval:10
                                                   target:self selector:@selector(reloadTable)
                                                 userInfo:nil repeats:YES];
+    
+    self.timer2 = [NSTimer scheduledTimerWithTimeInterval:3
+                                                  target:self selector:@selector(switchTitle)
+                                                userInfo:nil repeats:YES];
     [self reloadTable];
+    [self switchTitle];
+    
     
     
     
     NSUInteger arrayCount = [self.questionArray count];
-    if (arrayCount==0 && !self.popUpShowed){
+    if (arrayCount==1 && !self.popUpShowed){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"The QBoard"
-                                                        message:@"This is the QBoard. Nobody has posted a question yet. To get the discussion started click the plus button in the top right corner.."
+                                                        message:@"This is the QBoard. Nobody has posted a question yet. To get the discussion started click the plus button in the top right corner."
                                                        delegate:nil
                                               cancelButtonTitle:@"Let's go!"
                                               otherButtonTitles:nil];
@@ -133,6 +173,20 @@
     if ([self.questionArray count] == 0) {self.emptyQuestionArray = YES;}
     else { self.emptyQuestionArray = NO; }
     [self.tableView reloadData];
+    
+    /* Rotate between class title and number of live users
+    if(!self.liveUsers)
+    {
+    self.title = self.className;;
+    }
+    else
+    {
+    self.title = @"Live users: 3";
+    }
+    
+    self.liveUsers = !self.liveUsers;
+     */
+    
     NSLog(@"Refreshed Table");
 }
 
@@ -161,11 +215,13 @@
     self.question = qtext;
     self.qVotes = qVotes;
     self.qID = qid;
+    self.navigationItem.title = self.className;
     [self performSegueWithIdentifier:@"viewQuestion" sender:self.view];
 }
 
 -(void) viewWillDisappear:(BOOL)animated {
     [self.timer invalidate];
+    [self.timer2 invalidate];
 }
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -228,12 +284,13 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
     }
 
+    //UIImage * randomImage = [ UIImage imageNamed:[ NSString stringWithFormat:@"image%u.png", 1+arc4random_uniform(6) ] ] ;
     cell.textLabel.textColor = [UIColor whiteColor]; //added
     cell.textLabel.numberOfLines = 0;
     cell.textLabel.font = [UIFont fontWithName:@"Hoefler Text" size:16.0f];
-    self.tableView.separatorColor = [UIColor clearColor]; //added
-    self.tableView.backgroundView = [[UIImageView alloc] initWithImage:
-                                     [UIImage imageNamed:@"CTV_app_background_4.png"]];
+    
+    
+    
     /*
     //1. Setup the CATransform3D structure
     CATransform3D rotation;

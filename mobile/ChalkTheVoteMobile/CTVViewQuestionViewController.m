@@ -139,6 +139,7 @@
 
 -(void) viewWillAppear:(BOOL)animated {
     self.questionField.text = self.question;
+    self.questionField.numberOfLines =0;
     self.timer = [NSTimer scheduledTimerWithTimeInterval:10
                                                   target:self selector:@selector(reloadTable)
                                                 userInfo:nil repeats:YES];
