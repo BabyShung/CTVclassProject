@@ -53,6 +53,7 @@
 		E80F2B2018DA06A100035BFA /* CTVClassesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E80F2B1F18DA06A100035BFA /* CTVClassesTableViewController.m */; };
 		E80F2B2618DA06E900035BFA /* CTVAddClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E80F2B2518DA06E900035BFA /* CTVAddClassViewController.m */; };
 		E812C505191D8ADA009F6B27 /* CTVCreateClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E812C504191D8ADA009F6B27 /* CTVCreateClassViewController.m */; };
+		E812C507191D92BC009F6B27 /* verified_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E812C506191D92BC009F6B27 /* verified_icon.png */; };
 		E886768918F38D2F0090EB19 /* CTVPostQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E886768818F38D2F0090EB19 /* CTVPostQuestionViewController.m */; };
 		E8B4306D1901F25300982321 /* round_icon_flat_green_clear.png in Resources */ = {isa = PBXBuildFile; fileRef = E8B4306C1901F25300982321 /* round_icon_flat_green_clear.png */; };
 		E8B4306F1901F26200982321 /* round_icon_flat_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = E8B4306E1901F26200982321 /* round_icon_flat_grey.png */; };
@@ -130,6 +131,7 @@
 		E80F2B2518DA06E900035BFA /* CTVAddClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTVAddClassViewController.m; sourceTree = "<group>"; };
 		E812C503191D8ADA009F6B27 /* CTVCreateClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTVCreateClassViewController.h; sourceTree = "<group>"; };
 		E812C504191D8ADA009F6B27 /* CTVCreateClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTVCreateClassViewController.m; sourceTree = "<group>"; };
+		E812C506191D92BC009F6B27 /* verified_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = verified_icon.png; sourceTree = "<group>"; };
 		E886768718F38D2F0090EB19 /* CTVPostQuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTVPostQuestionViewController.h; sourceTree = "<group>"; };
 		E886768818F38D2F0090EB19 /* CTVPostQuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTVPostQuestionViewController.m; sourceTree = "<group>"; };
 		E8B4306C1901F25300982321 /* round_icon_flat_green_clear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = round_icon_flat_green_clear.png; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 		E80F2AEC18D8B78700035BFA /* ChalkTheVoteMobile */ = {
 			isa = PBXGroup;
 			children = (
+				E812C506191D92BC009F6B27 /* verified_icon.png */,
 				E8F1FA5D1908717A00BFB997 /* cell_back3_selected.png */,
 				E8F1FA591908717300BFB997 /* ico1_off.png */,
 				E8F1FA5A1908717300BFB997 /* ico1_off_clear.png */,
@@ -390,6 +393,7 @@
 				310467AA1918916500319AE1 /* image4.png in Resources */,
 				310467A319188D4900319AE1 /* image1.png in Resources */,
 				31B434FA18FE487500B1F15D /* chalkLine.png in Resources */,
+				E812C507191D92BC009F6B27 /* verified_icon.png in Resources */,
 				31160980190B633300A9A37E /* textField2.png in Resources */,
 				310467AC1918947900319AE1 /* image_set1.png in Resources */,
 				31160988190B685D00A9A37E /* login.png in Resources */,

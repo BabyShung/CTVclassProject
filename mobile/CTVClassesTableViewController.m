@@ -16,6 +16,7 @@
 @interface CTVClassesTableViewController ()
 @property (nonatomic,strong) NSString *className;
 @property BOOL emptyClassArray;
+@property NSInteger classesOwned;
 @end
 
 @implementation CTVClassesTableViewController
@@ -93,6 +94,7 @@
     NSDictionary *coursesDictionary = [self sendMessage:message toAddress:COURSELIST];
     NSDictionary *moderatorDictionary = [self sendMessage:message toAddress:MODLIST];
     self.classesArray = [NSMutableArray arrayWithArray:[moderatorDictionary objectForKey:@"courselist"]];
+    self.classesOwned = [self.classesArray count];
     [self.classesArray addObjectsFromArray:[coursesDictionary objectForKey:@"courselist"]];
     NSUInteger arrayCount = [self.classesArray count];
     if (arrayCount==0 && !self.popUpShowed){
@@ -161,7 +163,29 @@
     
     if (!self.emptyClassArray) {
         cell.textLabel.text = [NSString stringWithFormat:@"%@",[self.classesArray objectAtIndex:indexPath.row]];
+        if (indexPath.row < self.classesOwned) {
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            button.frame = CGRectMake(0, 0, 40, 40);
+            UIImage *buttonImage = [UIImage imageNamed:@"verified_icon"];
+            [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+            //button.frame = desiredLeft;
+            [cell.contentView addSubview:button];
+            [cell.contentView bringSubviewToFront:button];
+            [cell addSubview:button];
+        
+            UIImageView *accessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+            [accessoryView setImage:[UIImage imageNamed:@"round_icon_flat_grey.png"]];
+            [cell setAccessoryView:button];
+        }
+    
+    
+    
     }
+    
+    
+    
+    
+    
     return cell;
 }
 
