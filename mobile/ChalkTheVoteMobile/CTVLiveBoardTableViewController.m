@@ -19,6 +19,7 @@
 @property NSTimer *timer;
 @property NSTimer *timer2;
 @property BOOL emptyQuestionArray;
+@property NSInteger navBarSwitch;
 @end
 
 @implementation CTVLiveBoardTableViewController

@@ -57,9 +57,7 @@
     NSString *message = [NSString stringWithFormat:@"email=%@&password=%@",self.usernameField.text,self.passwordField.text];
     NSDictionary *loginDictionary = [self sendMessage:message toAddress:LOGIN];
     if ([[loginDictionary objectForKey:@"success"] integerValue]==1) {
-        NSDictionary *coursesDictionary = [self sendMessage:message toAddress:COURSELIST];
         [defaults setObject:self.usernameField.text forKey:@"username"];
-        [defaults setObject:[NSMutableArray arrayWithArray:[coursesDictionary objectForKey:@"courselist"]] forKey:@"classlist"];
         [self performSegueWithIdentifier:@"login" sender:self];
     } else {
         self.errorField.text = @"Login Error: Try again";

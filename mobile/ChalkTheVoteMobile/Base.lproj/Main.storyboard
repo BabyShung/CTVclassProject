@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Xdr-MM-fdk">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Xdr-MM-fdk">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -71,7 +71,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="registrationButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="BEc-AS-h8g"/>
+                                    <segue destination="Hgz-Lh-EWe" kind="push" id="dax-Sa-ihP"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ChalkTheVote_newLogo_gradient.png" translatesAutoresizingMaskIntoConstraints="NO" id="C48-ah-Flf">
@@ -98,7 +98,6 @@
                         <outlet property="usernameField" destination="k0o-YP-B65" id="PMh-di-Y8B"/>
                         <outlet property="usernameIMG" destination="YKc-Dl-7gW" id="WLv-i4-whr"/>
                         <segue destination="Aht-8i-b4q" kind="modal" identifier="login" modalTransitionStyle="crossDissolve" id="6PM-CD-tmn"/>
-                        <segue destination="Hgz-Lh-EWe" kind="push" identifier="register" id="fy3-oz-KRK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -192,7 +191,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="32Z-Od-YFj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2033" y="1060"/>
+            <point key="canvasLocation" x="2057" y="704"/>
         </scene>
         <!--Classes Table View Controller-->
         <scene sceneID="2Qe-iv-iWr">
@@ -533,6 +532,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="xld-uq-Van"/>
+        <segue reference="6PM-CD-tmn"/>
     </inferredMetricsTieBreakers>
 </document>
