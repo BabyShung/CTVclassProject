@@ -108,7 +108,7 @@
         self.popUpShowed = YES;
         
     }
-    
+    self.moderatorMode = NO;
     
     [self.tableView reloadData];
 }
@@ -117,6 +117,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     self.className = [self.classesArray objectAtIndex:indexPath.row];
+    if (indexPath.row < self.classesOwned) {
+        self.moderatorMode = YES;
+    }
     [self performSegueWithIdentifier:@"viewClass" sender:self.view];
 }
 
@@ -124,6 +127,7 @@
     if ([[segue identifier] isEqualToString:@"viewClass"]) {
         CTVLiveBoardTableViewController *vc = [segue destinationViewController];
         vc.className = self.className;
+        vc.moderatorMode = self.moderatorMode;
     }
 }
 
