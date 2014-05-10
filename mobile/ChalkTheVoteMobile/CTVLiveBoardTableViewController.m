@@ -10,7 +10,6 @@
 #import "CTVViewQuestionViewController.h"
 #import "CTVPostQuestionViewController.h"
 
-
 #define REFRESH @"http://chalkthevote.com/Trial/iosQboardRefresh.php"
 #define VOTE @"http://chalkthevote.com/Trial/iosVoteQuestion.php"
 #define VAL @"http://chalkthevote.com/Trial/iosValidateQuestion.php"
@@ -360,9 +359,15 @@
             qid = [qid substringFromIndex:1];
             NSString *qtext = [array objectAtIndex:1];
             NSString *qVotes = [array objectAtIndex:2];
+            //NSString *voted = [array objectAtIndex:3];
             NSInteger validated = [[array objectAtIndex:4] integerValue];
-            
-            cell.textLabel.text = [NSString stringWithFormat:@"%@\t%@",qtext,qVotes];
+            //NSInteger verifiedAnswer = [[array objectAtIndex:5] integerValue];
+            NSInteger numanswers = [[array objectAtIndex:6] integerValue];
+            //NSString *author = [array objectAtIndex:7];
+            NSString *date = [array objectAtIndex:8];
+            date = [date substringToIndex:([date length]-1)];
+            NSLog(@"%@",date);
+            cell.textLabel.text = [NSString stringWithFormat:@"%@\n\n  %@ Votes, %ld Answers\n  Posted: %@",qtext,qVotes,(long)numanswers,date];
             
             UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
             
@@ -378,6 +383,8 @@
                 [button addTarget:self action:@selector(unvalidateButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                 UIImage *buttonImage2 = [UIImage imageNamed:@"ico1_off.png"];
                 [button setBackgroundImage:buttonImage2 forState:UIControlStateNormal];
+                [button setTag:[qid integerValue]];
+
             }
                 //button.frame = desiredLeft;
                 [cell.contentView addSubview:button];
@@ -402,11 +409,16 @@
             qid = [qid substringFromIndex:1];
             NSString *qtext = [array objectAtIndex:1];
             NSString *qVotes = [array objectAtIndex:2];
-            NSInteger voted = [[[array objectAtIndex:3] substringToIndex:2] integerValue];
-        
-        
-            cell.textLabel.text = [NSString stringWithFormat:@"%@\t%@",qtext,qVotes];
-
+            NSInteger voted = [[array objectAtIndex:3] integerValue];
+            //NSInteger validated = [[array objectAtIndex:4] integerValue];
+            //NSInteger verifiedAnswer = [[array objectAtIndex:5] integerValue];
+            NSInteger numanswers = [[array objectAtIndex:6] integerValue];
+            //NSString *author = [array objectAtIndex:7];
+            NSString *date = [array objectAtIndex:8];
+            date = [date substringToIndex:([date length]-1)];
+            NSLog(@"%@",date);
+            cell.textLabel.text = [NSString stringWithFormat:@"%@\n\n  %@ Votes, %ld Answers\n  Posted: %@",qtext,qVotes,(long)numanswers,date];
+    
             UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     
             if (voted==0) {

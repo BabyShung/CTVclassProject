@@ -79,7 +79,8 @@
 - (IBAction)validateButtonPressed:(UIButton*)sender {
     NSInteger aID = sender.tag;
     NSLog(@"Validating :%ld", (long)aID);
-    NSString *message = [NSString stringWithFormat:@"qid=%ld&valid=1",(long)aID];
+    NSString *message = [NSString stringWithFormat:@"aid=%ld&valid=1",(long)aID];
+    NSLog(@"%@",message);
     NSDictionary *voteDictionary = [self sendMessage:message toAddress:VAL];
     if ([[voteDictionary objectForKey:@"success"] integerValue]==1) {
         NSLog(@"Validate successful");
@@ -93,6 +94,7 @@
     NSInteger aID = sender.tag;
     NSLog(@"Unvalidating:%ld", (long)aID);
     NSString *message = [NSString stringWithFormat:@"aid=%ld&valid=0",(long)aID];
+    NSLog(@"%@",message);
     NSDictionary *voteDictionary = [self sendMessage:message toAddress:VAL];
     if ([[voteDictionary objectForKey:@"success"] integerValue]==1) {
         NSLog(@"Unvalidated successful");
@@ -259,14 +261,22 @@
             cell.backgroundView = av;
             NSString *string = [self.answerArray objectAtIndex:indexPath.row];
             NSArray *array = [string componentsSeparatedByString:@";"];
-            NSString *qid = [array objectAtIndex:0];
-            qid = [qid substringFromIndex:1];
-            NSString *qtext = [array objectAtIndex:1];
-            NSString *qVotes = [array objectAtIndex:2];
+            NSString *aid = [array objectAtIndex:0];
+            aid = [aid substringFromIndex:1];
+            NSString *atext = [array objectAtIndex:1];
+            NSString *aVotes = [array objectAtIndex:2];
             NSInteger validated = [[array objectAtIndex:4] integerValue];
-            
-            cell.textLabel.text = [NSString stringWithFormat:@"%@\t%@",qtext,qVotes];
-            
+            NSString *date = [array objectAtIndex:5];
+            date = [date substringToIndex:([date length]-1)];
+            if (validated == 0) {
+                cell.textLabel.font = [UIFont fontWithName:@"Hoefler Text" size:12.0f];
+                cell.textLabel.text = [NSString stringWithFormat:@"%@\n\n  %@ Votes.\n  Posted: %@",atext,aVotes, date];
+            }
+            else {
+                cell.textLabel.font = [UIFont fontWithName:@"Hoefler Text" size:12.0f];
+                cell.textLabel.textColor = [UIColor colorWithRed:(255/255.0) green:(215/255.0) blue:(0/255.0) alpha:1.0];
+                cell.textLabel.text = [NSString stringWithFormat:@"%@\n\n  %@ Votes. Answer has been verified.\n  Posted: %@",atext,aVotes,date];
+            }
             UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
             
             if (validated==0) {
@@ -274,13 +284,14 @@
                 [button addTarget:self action:@selector(validateButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                 UIImage *buttonImage = [UIImage imageNamed:@"ico1_off_clear.png"];
                 [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-                [button setTag:[qid integerValue]];
+                [button setTag:[aid integerValue]];
                 
             } else if (validated==1) {
                 button.frame = CGRectMake(0, 0, 40, 40);
                 [button addTarget:self action:@selector(unvalidateButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                 UIImage *buttonImage2 = [UIImage imageNamed:@"ico1_off.png"];
                 [button setBackgroundImage:buttonImage2 forState:UIControlStateNormal];
+                [button setTag:[aid integerValue]];
             }
             //button.frame = desiredLeft;
             [cell.contentView addSubview:button];
@@ -299,14 +310,23 @@
             cell.backgroundView = av;
             NSString *string = [self.answerArray objectAtIndex:indexPath.row];
             NSArray *array = [string componentsSeparatedByString:@";"];
-            NSString *qid = [array objectAtIndex:0];
-            qid = [qid substringFromIndex:1];
-            NSString *qtext = [array objectAtIndex:1];
-            NSString *qVotes = [array objectAtIndex:2];
-            NSInteger voted = [[[array objectAtIndex:3] substringToIndex:2] integerValue];
-            
-            
-            cell.textLabel.text = [NSString stringWithFormat:@"%@\t%@",qtext,qVotes];
+            NSString *aid = [array objectAtIndex:0];
+            aid = [aid substringFromIndex:1];
+            NSString *atext = [array objectAtIndex:1];
+            NSString *aVotes = [array objectAtIndex:2];
+            NSInteger voted = [[array objectAtIndex:3] integerValue];
+            NSInteger validated = [[array objectAtIndex:4] integerValue];
+            NSString *date = [array objectAtIndex:5];
+            date = [date substringToIndex:([date length]-1)];
+            if (validated == 0) {
+                cell.textLabel.font = [UIFont fontWithName:@"Hoefler Text" size:12.0f];
+                cell.textLabel.text = [NSString stringWithFormat:@"%@\n\n%@ Votes.\nPosted: %@",atext,aVotes, date];
+            }
+            else {
+                cell.textLabel.font = [UIFont fontWithName:@"Hoefler Text" size:12.0f];
+                cell.textLabel.textColor = [UIColor colorWithRed:(255/255.0) green:(215/255.0) blue:(0/255.0) alpha:1.0];
+                cell.textLabel.text = [NSString stringWithFormat:@"%@\n\n%@ Votes. Answer has been verified.\nPosted: %@",atext,aVotes,date];
+            }
             
             UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
             
@@ -315,7 +335,7 @@
                 [button addTarget:self action:@selector(voteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                 UIImage *buttonImage = [UIImage imageNamed:@"ico1_off_clear.png"];
                 [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-                [button setTag:[qid integerValue]];
+                [button setTag:[aid integerValue]];
                 
             } else if (voted==1) {
                 button.frame = CGRectMake(0, 0, 40, 40);
