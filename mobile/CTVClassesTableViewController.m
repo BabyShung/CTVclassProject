@@ -11,6 +11,7 @@
 
 #define COURSELIST @"http://chalkthevote.com/Trial/iosCourseList.php"
 #define MODLIST @"http://chalkthevote.com/Trial/iosModeratorCourseList.php"
+#define SESSCLOSE @"http://chalkthevote.com/Trial/iosSessionStop.php"
 
 
 @interface CTVClassesTableViewController ()
@@ -94,6 +95,8 @@
     NSString *message = [NSString stringWithFormat:@"email=%@",[defaults objectForKey:@"username"]];
     NSDictionary *coursesDictionary = [self sendMessage:message toAddress:COURSELIST];
     NSDictionary *moderatorDictionary = [self sendMessage:message toAddress:MODLIST];
+    message = [NSString stringWithFormat:@"email=%@",[defaults objectForKey:@"username"]];
+    [self sendMessage:message toAddress:SESSCLOSE];
     self.classesArray = [NSMutableArray arrayWithArray:[moderatorDictionary objectForKey:@"courselist"]];
     self.classesOwned = [self.classesArray count];
     [self.classesArray addObjectsFromArray:[coursesDictionary objectForKey:@"courselist"]];
@@ -182,14 +185,8 @@
             [accessoryView setImage:[UIImage imageNamed:@"round_icon_flat_grey.png"]];
             [cell setAccessoryView:button];
         }
-    
-    
-    
+
     }
-    
-    
-    
-    
     
     return cell;
 }

@@ -14,11 +14,16 @@
 #define VOTE @"http://chalkthevote.com/Trial/iosVoteQuestion.php"
 #define VAL @"http://chalkthevote.com/Trial/iosValidateQuestion.php"
 #define POSTQ @"http://chalkthevote.com/Trial/iosPushLiveQuestion.php"
+#define SESSSTART @"http://chalkthevote.com/Trial/iosSessionStart.php"
+
 
 @interface CTVLiveBoardTableViewController ()
 @property NSTimer *timer;
 @property NSTimer *timer2;
 @property BOOL emptyQuestionArray;
+@property NSString *key;
+@property NSString *liveusers;
+
 @end
 
 @implementation CTVLiveBoardTableViewController
@@ -61,14 +66,16 @@
     }
     else if(fmod(self.navBarSwitch,3)==1)
     {
-        
-        self.title = @"Users in class: 3";
+        if ([self.liveusers length]==0) {
+            self.title = self.className;
+        }
+        self.title = [NSString stringWithFormat:@"Users in class: %@",self.liveusers];
         //[self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor greenColor]}];
         
     }
     else
     {
-    self.title = @"Class code: vZ4q";
+    self.title = [NSString stringWithFormat:@"Class code: %@",self.key ];
     }
     
     //self.liveUsers = !self.liveUsers;
@@ -94,6 +101,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.liveUsers = @"";
     /* NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *username = [defaults objectForKey:@"username"];
     NSString *message = [NSString stringWithFormat:@"coursename=%@&email=%@",self.className,username];
@@ -138,6 +146,7 @@
 
 
 -(void) viewWillAppear:(BOOL)animated {
+    
     self.navigationItem.title = self.className;
     self.timer = [NSTimer scheduledTimerWithTimeInterval:10
                                                   target:self selector:@selector(reloadTable)
@@ -150,10 +159,12 @@
     [self switchTitle];
     
     
-    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *message = [NSString stringWithFormat:@"email=%@&coursename=%@",[defaults objectForKey:@"username"],self.className];
+    [self sendMessage:message toAddress:SESSSTART];
     
     NSUInteger arrayCount = [self.questionArray count];
-    if (arrayCount==1 && !self.popUpShowed){
+    if (arrayCount==0 && !self.popUpShowed){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"The QBoard"
                                                         message:@"This is the QBoard. Nobody has posted a question yet. To get the discussion started click the plus button in the top right corner."
                                                        delegate:nil
@@ -170,6 +181,8 @@
     
     NSDictionary *questionsDictionary = [self sendMessage:message toAddress:REFRESH];
     self.questionArray = [NSMutableArray arrayWithArray:[questionsDictionary objectForKey:@"qdetails"]];
+    self.liveusers = [questionsDictionary objectForKey:@"liveusers"];
+    self.key = [questionsDictionary objectForKey:@"key"];
     if ([self.questionArray count] == 0) {self.emptyQuestionArray = YES;}
     else { self.emptyQuestionArray = NO; }
     [self.tableView reloadData];
@@ -366,7 +379,6 @@
             //NSString *author = [array objectAtIndex:7];
             NSString *date = [array objectAtIndex:8];
             date = [date substringToIndex:([date length]-1)];
-            NSLog(@"%@",date);
             cell.textLabel.text = [NSString stringWithFormat:@"%@\n\n  %@ Votes, %ld Answers\n  Posted: %@",qtext,qVotes,(long)numanswers,date];
             
             UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -416,7 +428,6 @@
             //NSString *author = [array objectAtIndex:7];
             NSString *date = [array objectAtIndex:8];
             date = [date substringToIndex:([date length]-1)];
-            NSLog(@"%@",date);
             cell.textLabel.text = [NSString stringWithFormat:@"%@\n\n  %@ Votes, %ld Answers\n  Posted: %@",qtext,qVotes,(long)numanswers,date];
     
             UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];

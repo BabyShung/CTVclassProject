@@ -11,6 +11,8 @@
 #define VOTE @"http://chalkthevote.com/Trial/iosVoteAnswer.php"
 #define REFRESH @"http://chalkthevote.com/Trial/iosGetAnswers.php"
 #define VAL @"http://chalkthevote.com/Trial/iosValidateAnswer.php"
+#define SESSCLOSE @"http://chalkthevote.com/Trial/iosSessionStop.php"
+
 
 
 @interface CTVViewQuestionViewController ()
@@ -175,6 +177,9 @@
     self.timer = [NSTimer scheduledTimerWithTimeInterval:10
                                                   target:self selector:@selector(reloadTable)
                                                 userInfo:nil repeats:YES];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *message = [NSString stringWithFormat:@"email=%@",[defaults objectForKey:@"username"]];
+    [self sendMessage:message toAddress:SESSCLOSE];
     [self reloadTable];
 }
 

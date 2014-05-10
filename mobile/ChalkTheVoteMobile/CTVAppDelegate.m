@@ -7,10 +7,36 @@
 //
 
 #import "CTVAppDelegate.h"
+#define SESSCLOSE @"http://chalkthevote.com/Trial/iosSessionStop.php"
+
 
 @implementation CTVAppDelegate
 
-
+- (NSDictionary*) sendMessage:(NSString*)message toAddress:(NSString*)address {
+    //TODO verify URL and add back in password
+    NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSURL *url = [NSURL URLWithString:address];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:data];
+    NSURLResponse *response;
+    NSError *err;
+    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
+    NSString* newStr = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+    NSLog(@"responseData: %@", newStr);
+    NSLog(@"%@",err);
+    //Parse to JSON
+    NSError *error = nil;
+    NSDictionary *jsonArray = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+    if (error != nil) {
+        NSLog(@"Error parsing JSON.");
+    }
+    else {
+        NSLog(@"Array: %@", jsonArray);
+    }
+    return jsonArray;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -30,8 +56,10 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    NSLog(@"Gone");
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *message = [NSString stringWithFormat:@"email=%@",[defaults objectForKey:@"username"]];
+    [self sendMessage:message toAddress:SESSCLOSE];
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
@@ -47,6 +75,9 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *message = [NSString stringWithFormat:@"email=%@",[defaults objectForKey:@"username"]];
+    [self sendMessage:message toAddress:SESSCLOSE];
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
