@@ -12,5 +12,6 @@
 @property (nonatomic,strong) NSString *question;
 @property (nonatomic,strong) NSString *qID;
 @property (nonatomic,strong) NSString *qVotes;
+@property (nonatomic,strong) NSString *classname;
 @property BOOL moderatorMode;
 @end

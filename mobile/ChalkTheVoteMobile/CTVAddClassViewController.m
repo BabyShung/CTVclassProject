@@ -11,6 +11,7 @@
 
 @interface CTVAddClassViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *codeField;
+@property (weak, nonatomic) IBOutlet UIImageView *orPic;
 @property (weak, nonatomic) IBOutlet UILabel *errorField;
 @end
 
@@ -74,8 +75,31 @@
     self.view.backgroundColor = [UIColor colorWithPatternImage:image];
     //self.navigationController.navigationBar.hidden = YES;
     
+    [self moveImage:self.orPic duration:1.0
+              curve:UIViewAnimationCurveLinear x:0.0 y:5.0];
+    
 	// Do any additional setup after loading the view.
 }
+
+
+- (void)moveImage:(UIImageView *)image duration:(NSTimeInterval)duration
+            curve:(int)curve x:(CGFloat)x y:(CGFloat)y
+{
+    // Setup the animation
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:duration];
+    [UIView setAnimationCurve:curve];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    //  Â
+    // The transform matrix
+    CGAffineTransform transform = CGAffineTransformMakeTranslation(x, y);
+    image.transform = transform;
+    //Â
+    // Commit the changes
+    [UIView commitAnimations];
+    // Â
+}
+
 
 -(void) viewWillAppear:(BOOL)animated {
     self.navigationItem.title = @"Add A Class";

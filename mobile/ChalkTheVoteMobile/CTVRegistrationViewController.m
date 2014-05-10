@@ -130,6 +130,10 @@
     
     [self.gear1.layer addAnimation:rotation forKey:@"Spin"];
     [self.gear2.layer addAnimation:rotation2 forKey:@"Spin"];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
+                                                  forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.navigationController.navigationBar.translucent = YES;
 }
 
 - (void)didReceiveMemoryWarning

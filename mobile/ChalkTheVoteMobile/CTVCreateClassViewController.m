@@ -13,6 +13,8 @@
 @interface CTVCreateClassViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *classNameField;
 @property (weak, nonatomic) IBOutlet UITextField *numStudentsField;
+@property (weak, nonatomic) IBOutlet UIImageView *gear1;
+@property (weak, nonatomic) IBOutlet UIImageView *gear2;
 
 @end
 
@@ -49,6 +51,31 @@
     NSString *message = [NSString stringWithFormat:@"email=%@&coursename=%@&totalstudents=%@",[defaults objectForKey:@"username"],self.classNameField.text, self.numStudentsField.text];
     NSDictionary *registrationDictionary = [self sendMessage:message toAddress:REG];
     if ([[registrationDictionary objectForKey:@"success"] intValue] == 1) {
+        
+        
+        //-----Gear Animation ----
+        
+        CABasicAnimation *rotation;
+        rotation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+        rotation.fromValue = [NSNumber numberWithFloat:0];
+        rotation.toValue = [NSNumber numberWithFloat:(2*M_PI)];
+        rotation.duration = 1.1; // Speed
+        rotation.repeatCount = HUGE_VALF; // Repeat forever. Can be a finite number.
+        
+        CABasicAnimation *rotation2;
+        rotation2 = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+        rotation2.fromValue = [NSNumber numberWithFloat:(2*M_PI)];
+        rotation2.toValue = [NSNumber numberWithFloat:0];
+        rotation2.duration = 1.1; // Speed
+        rotation2.repeatCount = HUGE_VALF; // Repeat forever. Can be a finite number.
+        
+        [self.gear1.layer addAnimation:rotation forKey:@"Spin"];
+        [self.gear2.layer addAnimation:rotation2 forKey:@"Spin"];
+        
+        //------------------------
+        
+        
+        
         [self performSegueWithIdentifier:@"successfulRegistration" sender:self];
     }
 }
@@ -66,7 +93,38 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    UIGraphicsBeginImageContext(self.view.frame.size);
+    ;[[UIImage imageNamed:@"CTV_app_background.png"] drawInRect:self.view.bounds];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    self.view.backgroundColor = [UIColor colorWithPatternImage:image];
+    
+    
+    CABasicAnimation *rotation;
+    rotation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+    rotation.fromValue = [NSNumber numberWithFloat:0];
+    rotation.toValue = [NSNumber numberWithFloat:(2*M_PI)];
+    rotation.duration = 15.1; // Speed
+    rotation.repeatCount = HUGE_VALF; // Repeat forever. Can be a finite number.
+    
+    CABasicAnimation *rotation2;
+    rotation2 = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+    rotation2.fromValue = [NSNumber numberWithFloat:(2*M_PI)];
+    rotation2.toValue = [NSNumber numberWithFloat:0];
+    rotation2.duration = 15.1; // Speed
+    rotation2.repeatCount = HUGE_VALF; // Repeat forever. Can be a finite number.
+    
+    [self.gear1.layer addAnimation:rotation forKey:@"Spin"];
+    [self.gear2.layer addAnimation:rotation2 forKey:@"Spin"];
+    
+    
 }
+
+
+
+
+
 
 - (void)didReceiveMemoryWarning
 {

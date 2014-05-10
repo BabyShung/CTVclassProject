@@ -223,6 +223,7 @@
     NSArray *array = [string componentsSeparatedByString:@";"];
     NSString *qid = [array objectAtIndex:0];
     qid = [qid substringFromIndex:1];
+    NSLog(@"You selected: %@",qid);
     NSString *qtext = [array objectAtIndex:1];
     NSString *qVotes = [array objectAtIndex:2];
     self.question = qtext;

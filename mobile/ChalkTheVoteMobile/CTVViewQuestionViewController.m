@@ -8,6 +8,7 @@
 
 #import "CTVViewQuestionViewController.h"
 #import "CTVPostAnswerViewController.h"
+#import <MessageUI/MessageUI.h>
 #define VOTE @"http://chalkthevote.com/Trial/iosVoteAnswer.php"
 #define REFRESH @"http://chalkthevote.com/Trial/iosGetAnswers.php"
 #define VAL @"http://chalkthevote.com/Trial/iosValidateAnswer.php"
@@ -15,7 +16,7 @@
 
 
 
-@interface CTVViewQuestionViewController ()
+@interface CTVViewQuestionViewController ()<MFMailComposeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *questionField;
 @property (weak, nonatomic) IBOutlet UITableView *answerTable;
 @property (strong, nonatomic) NSArray *answerArray;
@@ -158,6 +159,16 @@
     self.navigationItem.rightBarButtonItems = actionButtonItems;
     */
     
+    UIBarButtonItem *addAnswer = [[UIBarButtonItem alloc]
+                                  //initWithTitle:@"Post answer"
+                                  //style:UIBarButtonItemStyleBordered
+                                  initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+                                  target:self
+                                  action:@selector(foundView:)];
+    
+    NSArray *actionButtonItems = @[addAnswer];
+    self.navigationItem.rightBarButtonItems = actionButtonItems;
+    
     UITableView *tableToMove = self.answerTable;
     
     tableToMove.frame = CGRectMake(10, 10, 200, 1000);
@@ -169,6 +180,50 @@
     [self moveImage:tableToMove duration:0.4
               curve:UIViewAnimationCurveLinear x:0.0 y:-410.0];
     
+}
+
+
+
+- (IBAction)emailSupport:(id)sender
+{
+    NSString *iOSVersion = [[UIDevice currentDevice] systemVersion];
+    NSString *model = [[UIDevice currentDevice] model];
+    NSString *version = @"1.0";
+    NSString *build = @"100";
+    MFMailComposeViewController *mailComposer = [[MFMailComposeViewController alloc] init];
+    mailComposer.mailComposeDelegate = self;
+    //[mailComposer setToRecipients:[NSArray arrayWithObjects: @"support@myappworks.com",nil]];
+    [mailComposer setSubject:[NSString stringWithFormat: self.question,version,build]];
+    NSString *supportText = [NSString stringWithFormat:@"Sent by ChalkTheVote for %@\n\n",model];
+    supportText = [supportText stringByAppendingString: self.question];
+    
+    for (id object in self.answerArray){
+        NSArray *array = [object componentsSeparatedByString:@";"];
+        NSString *subject2 = [array objectAtIndex:1];
+        supportText = [supportText stringByAppendingString:@"\n\n"];
+        supportText = [supportText stringByAppendingString:subject2];
+        NSLog(subject2);
+    }
+    [mailComposer setMessageBody:supportText isHTML:NO];
+    [self presentViewController:mailComposer animated:YES completion:nil];
+}
+
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+
+
+-(void)foundView:(id)sender {
+    
+    //UIViewController *foundVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CTVPostAnswerViewController"];
+    
+    //[self.navigationController pushViewController:foundVC animated:YES];
+    
+    [self performSegueWithIdentifier:@"postAnswer" sender:self];
 }
 
 -(void) viewWillAppear:(BOOL)animated {
@@ -198,6 +253,7 @@
     if ([[segue identifier] isEqualToString:@"postAnswer"]) {
         CTVPostAnswerViewController *vc = [segue destinationViewController];
         vc.qid = self.qID;
+        NSLog(@"Viewing QID: %@",self.qID);
     }
 }
 

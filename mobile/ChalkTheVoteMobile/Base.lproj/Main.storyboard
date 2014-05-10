@@ -318,19 +318,24 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jfW-pl-AzC">
+                                <rect key="frame" x="20" y="72" width="104" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Email Question">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="emailSupport:" destination="p5q-ek-UQF" eventType="touchUpInside" id="5gH-Oz-wTn"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Lkt-cx-VeT">
-                        <barButtonItem key="rightBarButtonItem" title="+" id="wEQ-tQ-hq7">
-                            <connections>
-                                <segue destination="LCb-0W-X9z" kind="push" identifier="postAnswer" id="fPW-bC-uaS"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="Lkt-cx-VeT"/>
                     <connections>
                         <outlet property="answerTable" destination="sdp-1b-wrs" id="UWQ-7v-QEy"/>
                         <outlet property="questionField" destination="4Zc-p1-1a3" id="chR-Uw-gMI"/>
+                        <segue destination="LCb-0W-X9z" kind="push" identifier="postAnswer" id="xFy-aE-lyx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lzA-1w-Nck" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -340,7 +345,7 @@
         <!--Post Answer View Controller-->
         <scene sceneID="ZgL-5s-IhE">
             <objects>
-                <viewController id="LCb-0W-X9z" customClass="CTVPostAnswerViewController" sceneMemberID="viewController">
+                <viewController restorationIdentifier="CTVPostAnswerViewController" storyboardIdentifier="CTVPostAnswerViewController" id="LCb-0W-X9z" customClass="CTVPostAnswerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xh7-eL-gm7"/>
                         <viewControllerLayoutGuide type="bottom" id="iiR-hY-eP9"/>
@@ -456,16 +461,18 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enter Class Code to Join a Class" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pxs-Fw-BwR">
-                                <rect key="frame" x="39" y="93" width="253" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enter 4 digit Class Code to Join a Class" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pxs-Fw-BwR">
+                                <rect key="frame" x="36" y="93" width="305" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yC1-Pa-pIb">
                                 <rect key="frame" x="136" y="164" width="49" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Submit">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -483,12 +490,17 @@
                                 <rect key="frame" x="92" y="307" width="136" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Create a New Class">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <segue destination="Etu-M2-Muu" kind="push" id="aJU-mK-uaF"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="or_CTV.png" translatesAutoresizingMaskIntoConstraints="NO" id="HRA-Go-V7E">
+                                <rect key="frame" x="123" y="223" width="74" height="58"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -496,6 +508,7 @@
                     <connections>
                         <outlet property="codeField" destination="moR-re-tRS" id="4NX-HC-Xhr"/>
                         <outlet property="errorField" destination="BLo-AF-RrC" id="TXr-3d-mVO"/>
+                        <outlet property="orPic" destination="HRA-Go-V7E" id="dlQ-RS-GTb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t2N-Kh-d65" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -518,45 +531,59 @@
                                 <rect key="frame" x="25" y="107" width="98" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="# of Students:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kTs-s7-5md">
-                                <rect key="frame" x="20" y="172" width="108" height="21"/>
+                                <rect key="frame" x="20" y="151" width="108" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4ox-Yu-rdD">
-                                <rect key="frame" x="161" y="103" width="139" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" background="textField.png" translatesAutoresizingMaskIntoConstraints="NO" id="4ox-Yu-rdD">
+                                <rect key="frame" x="145" y="84" width="175" height="68"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NN1-jX-CFi">
-                                <rect key="frame" x="161" y="172" width="139" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" background="textField.png" translatesAutoresizingMaskIntoConstraints="NO" id="NN1-jX-CFi">
+                                <rect key="frame" x="145" y="129" width="175" height="68"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kxe-D5-4fy">
-                                <rect key="frame" x="137" y="269" width="49" height="30"/>
+                                <rect key="frame" x="137" y="222" width="49" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Submit">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="submitButtonPressed:" destination="Etu-M2-Muu" eventType="touchUpInside" id="XFj-J6-n4w"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="gear.png" translatesAutoresizingMaskIntoConstraints="NO" id="1rq-qJ-PU0">
+                                <rect key="frame" x="-101" y="258" width="200" height="200"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="gear.png" translatesAutoresizingMaskIntoConstraints="NO" id="sIg-u6-QOT">
+                                <rect key="frame" x="218" y="331" width="200" height="200"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="VZs-MS-csm"/>
                     <connections>
                         <outlet property="classNameField" destination="4ox-Yu-rdD" id="qkU-7P-WQm"/>
+                        <outlet property="gear1" destination="1rq-qJ-PU0" id="vLi-go-lNN"/>
+                        <outlet property="gear2" destination="sIg-u6-QOT" id="AHC-hY-cGN"/>
                         <outlet property="numStudentsField" destination="NN1-jX-CFi" id="TwQ-m3-Tri"/>
-                        <segue destination="Aht-8i-b4q" kind="modal" identifier="successfulRegistration" id="oLX-5f-5bW"/>
+                        <segue destination="Aht-8i-b4q" kind="modal" identifier="successfulRegistration" modalTransitionStyle="crossDissolve" id="oLX-5f-5bW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2ps-RZ-9Y4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -621,8 +648,10 @@
     </scenes>
     <resources>
         <image name="ChalkTheVote_newLogo_gradient.png" width="1000" height="500"/>
+        <image name="gear.png" width="256" height="256"/>
         <image name="gear_clear.png" width="256" height="256"/>
         <image name="login.png" width="83" height="55"/>
+        <image name="or_CTV.png" width="200" height="200"/>
         <image name="password.png" width="182" height="61"/>
         <image name="textField.png" width="468" height="152"/>
         <image name="username.png" width="171" height="31"/>
@@ -633,7 +662,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="xld-uq-Van"/>
         <segue reference="9rP-Gg-O0c"/>
+        <segue reference="oLX-5f-5bW"/>
     </inferredMetricsTieBreakers>
 </document>

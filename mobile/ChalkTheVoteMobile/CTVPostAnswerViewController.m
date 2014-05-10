@@ -48,6 +48,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *username = [defaults valueForKey:@"username"];
     NSString *message = [NSString stringWithFormat:@"email=%@&qid=%@&atext=%@",username,self.qid,self.textBox.text];
+    NSLog(@"Posting answer: %@",message);
     NSDictionary *postDicionary = [self sendMessage:message toAddress:POST];
     if ([[postDicionary objectForKey:@"success"] integerValue]==1) {
         [self.navigationController popViewControllerAnimated:YES];
