@@ -13,6 +13,7 @@
 
 #define REFRESH @"http://chalkthevote.com/Trial/iosQboardRefresh.php"
 #define VOTE @"http://chalkthevote.com/Trial/iosVoteQuestion.php"
+#define VAL @"http://chalkthevote.com/Trial/iosValidateQuestion.php"
 #define POSTQ @"http://chalkthevote.com/Trial/iosPushLiveQuestion.php"
 
 @interface CTVLiveBoardTableViewController ()
@@ -44,7 +45,7 @@
         //NSLog(@"Error parsing JSON.");
     }
     else {
-        //NSLog(@"Array: %@", jsonArray);
+        NSLog(@"Array: %@", jsonArray);
     }
     return jsonArray;
 }
@@ -230,6 +231,7 @@
         vc.question = self.question;
         vc.qID = self.qID;
         vc.qVotes = self.qVotes;
+        vc.moderatorMode = self.moderatorMode;
     } else if ([[segue identifier] isEqualToString:@"postQuestion"]) {
         CTVPostQuestionViewController *vc = [segue destinationViewController];
         vc.className = self.className;
@@ -263,14 +265,37 @@
     NSDictionary *voteDictionary = [self sendMessage:message toAddress:VOTE];
     if ([[voteDictionary objectForKey:@"success"] integerValue]==1) {
         NSLog(@"Voted successful");
-        [self viewWillAppear:YES];
+        [self reloadTable];
     } else {
         //show error
     }
 }
 
+- (IBAction)validateButtonPressed:(UIButton*)sender {
+    NSInteger qID = sender.tag;
+    NSLog(@"Validating :%ld", (long)qID);
+    NSString *message = [NSString stringWithFormat:@"aid=%ld&valid=1",(long)qID];
+    NSDictionary *voteDictionary = [self sendMessage:message toAddress:VAL];
+    if ([[voteDictionary objectForKey:@"success"] integerValue]==1) {
+        NSLog(@"Validate successful");
+        [self reloadTable];
+    } else {
+        //show error
+    }
+}
 
-
+- (IBAction)unvalidateButtonPressed:(UIButton*)sender {
+    NSInteger qID = sender.tag;
+    NSLog(@"Unvalidating:%ld", (long)qID);
+    NSString *message = [NSString stringWithFormat:@"aid=%ld&valid=0",(long)qID];
+    NSDictionary *voteDictionary = [self sendMessage:message toAddress:VAL];
+    if ([[voteDictionary objectForKey:@"success"] integerValue]==1) {
+        NSLog(@"Unvalidated successful");
+        [self reloadTable];
+    } else {
+        //show error
+    }
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -322,45 +347,89 @@
     
 
     if (!self.emptyQuestionArray) {
-        //set cell background gradient image
-        UIImageView *av = [[UIImageView alloc] initWithFrame:CGRectMake(20, 20, 277, 58)];
-        av.backgroundColor = [UIColor clearColor];
-        av.opaque = NO;
-        av.image = [UIImage imageNamed:@"cell_back3.png"];
-        cell.backgroundView = av;
-        NSString *string = [self.questionArray objectAtIndex:indexPath.row];
-        NSArray *array = [string componentsSeparatedByString:@";"];
-        NSString *qid = [array objectAtIndex:0];
-        qid = [qid substringFromIndex:1];
-        NSString *qtext = [array objectAtIndex:1];
-        NSString *qVotes = [array objectAtIndex:2];
-        NSInteger voted = [[[array objectAtIndex:3] substringToIndex:2] integerValue];
+        if (self.moderatorMode) {
+            //set cell background gradient image
+            UIImageView *av = [[UIImageView alloc] initWithFrame:CGRectMake(20, 20, 277, 58)];
+            av.backgroundColor = [UIColor clearColor];
+            av.opaque = NO;
+            av.image = [UIImage imageNamed:@"cell_back3.png"];
+            cell.backgroundView = av;
+            NSString *string = [self.questionArray objectAtIndex:indexPath.row];
+            NSArray *array = [string componentsSeparatedByString:@";"];
+            NSString *qid = [array objectAtIndex:0];
+            qid = [qid substringFromIndex:1];
+            NSString *qtext = [array objectAtIndex:1];
+            NSString *qVotes = [array objectAtIndex:2];
+            NSInteger validated = [[array objectAtIndex:4] integerValue];
+            
+            cell.textLabel.text = [NSString stringWithFormat:@"%@\t%@",qtext,qVotes];
+            
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            
+            if (validated==0) {
+                button.frame = CGRectMake(0, 0, 40, 40);
+                [button addTarget:self action:@selector(validateButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                UIImage *buttonImage = [UIImage imageNamed:@"ico1_off_clear.png"];
+                [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+                [button setTag:[qid integerValue]];
+                
+            } else if (validated==1) {
+                button.frame = CGRectMake(0, 0, 40, 40);
+                [button addTarget:self action:@selector(unvalidateButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                UIImage *buttonImage2 = [UIImage imageNamed:@"ico1_off.png"];
+                [button setBackgroundImage:buttonImage2 forState:UIControlStateNormal];
+            }
+                //button.frame = desiredLeft;
+                [cell.contentView addSubview:button];
+                [cell.contentView bringSubviewToFront:button];
+                [cell addSubview:button];
+            
+                UIImageView *accessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+                [accessoryView setImage:[UIImage imageNamed:@"round_icon_flat_grey.png"]];
+                [cell setAccessoryView:button];
+            }
+        
+        else {
+            //set cell background gradient image
+            UIImageView *av = [[UIImageView alloc] initWithFrame:CGRectMake(20, 20, 277, 58)];
+            av.backgroundColor = [UIColor clearColor];
+            av.opaque = NO;
+            av.image = [UIImage imageNamed:@"cell_back3.png"];
+            cell.backgroundView = av;
+            NSString *string = [self.questionArray objectAtIndex:indexPath.row];
+            NSArray *array = [string componentsSeparatedByString:@";"];
+            NSString *qid = [array objectAtIndex:0];
+            qid = [qid substringFromIndex:1];
+            NSString *qtext = [array objectAtIndex:1];
+            NSString *qVotes = [array objectAtIndex:2];
+            NSInteger voted = [[[array objectAtIndex:3] substringToIndex:2] integerValue];
         
         
-        cell.textLabel.text = [NSString stringWithFormat:@"%@\t%@",qtext,qVotes];
+            cell.textLabel.text = [NSString stringWithFormat:@"%@\t%@",qtext,qVotes];
 
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     
-        if (voted==0) {
-            button.frame = CGRectMake(0, 0, 40, 40);
-            [button addTarget:self action:@selector(voteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-            UIImage *buttonImage = [UIImage imageNamed:@"ico1_off_clear.png"];
-            [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-            [button setTag:[qid integerValue]];
+            if (voted==0) {
+                button.frame = CGRectMake(0, 0, 40, 40);
+                [button addTarget:self action:@selector(voteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                UIImage *buttonImage = [UIImage imageNamed:@"ico1_off_clear.png"];
+                [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+                [button setTag:[qid integerValue]];
         
-        } else if (voted==1) {
-            button.frame = CGRectMake(0, 0, 40, 40);
-            UIImage *buttonImage2 = [UIImage imageNamed:@"ico1_off.png"];
-            [button setBackgroundImage:buttonImage2 forState:UIControlStateNormal];
+            } else if (voted==1) {
+                button.frame = CGRectMake(0, 0, 40, 40);
+                UIImage *buttonImage2 = [UIImage imageNamed:@"ico1_off.png"];
+                [button setBackgroundImage:buttonImage2 forState:UIControlStateNormal];
+            }
+                //button.frame = desiredLeft;
+                [cell.contentView addSubview:button];
+                [cell.contentView bringSubviewToFront:button];
+                [cell addSubview:button];
+            
+                UIImageView *accessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+                [accessoryView setImage:[UIImage imageNamed:@"round_icon_flat_grey.png"]];
+                [cell setAccessoryView:button];
         }
-            //button.frame = desiredLeft;
-            [cell.contentView addSubview:button];
-            [cell.contentView bringSubviewToFront:button];
-            [cell addSubview:button];
-        
-            UIImageView *accessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
-            [accessoryView setImage:[UIImage imageNamed:@"round_icon_flat_grey.png"]];
-            [cell setAccessoryView:button];
     }
 
     cell.backgroundColor  = [UIColor clearColor]; //added
