@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ChalkTheVoteMobile/CTVViewController.m"
-            timestampString = "418271361.822619"
+            timestampString = "421460676.419656"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
             landmarkName = "@implementation CTVViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -96,6 +96,22 @@
             startingLineNumber = "97"
             endingLineNumber = "97"
             landmarkName = "-viewWillAppear:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ChalkTheVoteMobile/CTVViewController.m"
+            timestampString = "421460260.839729"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "-dataStore"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
